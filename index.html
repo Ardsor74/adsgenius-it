@@ -313,7 +313,7 @@
         ></textarea>
         <div class="flex items-center justify-between mt-4 gap-3 flex-wrap">
           <span class="text-xs text-slate-600"><span id="char-count">0</span>/800</span>
-          <button id="btn-generate"
+          <button id="btn-generate" onclick="generate()"
             class="flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-white bg-brand-600 hover:bg-brand-500 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-all shadow-glow-blue-sm">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             <span id="btn-text">Genera Magia</span>
@@ -733,8 +733,9 @@
 
   /* ─── GENERATE ─── */
   async function generate() {
+    try {
     const product = document.getElementById('product-input').value.trim();
-    if (!product) return;
+    if (!product) { alert('Scrivi cosa vuoi vendere prima di generare!'); return; }
 
     hide('error-banner');
     hide('results');
@@ -777,6 +778,11 @@
       btn.disabled = false;
       label.textContent = 'Genera Magia';
     }
+    } catch(outerErr) {
+      console.error('Generate outer error:', outerErr);
+      document.getElementById('error-text').textContent = 'Errore JS: ' + outerErr.message;
+      show('error-banner');
+    }
   }
 
   /* ─── LEGAL MODAL ─── */
@@ -816,7 +822,8 @@
   }
 
   /* ─── EVENTS ─── */
-  document.getElementById('btn-generate').addEventListener('click', generate);
+  try {
+    document.getElementById('btn-generate').addEventListener('click', generate);
   document.getElementById('product-input').addEventListener('input', function() {
     document.getElementById('char-count').textContent = this.value.length;
   });
