@@ -1,28 +1,18 @@
 // netlify/functions/generate.js
-// AdsGenius Italia — Backend Netlify Function
-// Interroga Google Gemini 1.5 Flash via REST fetch
-// Richiede: process.env.GOOGLE_API_KEY
+// Usa il modulo https nativo di Node — compatibile con qualsiasi versione
 
-const GEMINI_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const https = require('https');
 
 const SYSTEM_PROMPT = `Sei il miglior copywriter italiano specializzato in performance marketing digitale.
-Il tuo compito è creare copy pubblicitari AIDA professionali, persuasivi e immediatamente utilizzabili.
+Crea copy pubblicitari AIDA professionali, persuasivi e immediatamente utilizzabili.
 
-ISTRUZIONI OBBLIGATORIE:
-- Scrivi SEMPRE e SOLO in italiano, tono caldo, diretto e persuasivo.
-- Usa emoji professionali per aumentare l'engagement visivo (2-4 per sezione).
-- Ogni sezione deve essere autonoma e pronta per Meta Ads, Google Ads o TikTok.
-- Sii specifico al prodotto indicato: evita frasi generiche e clichés.
+ISTRUZIONI:
+- Scrivi SEMPRE in italiano, tono caldo, diretto e persuasivo.
+- Usa emoji professionali (2-4 per sezione).
+- Sii specifico al prodotto: evita frasi generiche.
 - Lunghezza ideale per sezione: 60-120 parole.
 
-FRAMEWORK AIDA:
-- [ATTENZIONE]: Headline/hook potente che ferma lo scroll. Identifica un problema urgente o promette un beneficio immediato.
-- [INTERESSE]: Costruisce curiosità e rilevanza. Approfondisce il problema o la soluzione con dettagli concreti.
-- [DESIDERIO]: Dipinge il beneficio emotivo e trasformativo. Come cambia la vita del cliente dopo l'acquisto?
-- [AZIONE]: Call-to-action chiara, urgente e irresistibile. Include un passo specifico da compiere ora.
-
-FORMATO RISPOSTA OBBLIGATORIO — usa esattamente questi tag:
+FORMATO RISPOSTA OBBLIGATORIO:
 [ATTENZIONE]
 testo qui
 
@@ -35,7 +25,33 @@ testo qui
 [AZIONE]
 testo qui`;
 
-// ── CORS Headers ──
+function httpsPost(hostname, path, apiKey, body) {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify(body);
+    const options = {
+      hostname,
+      path: `${path}?key=${apiKey}`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+      },
+    };
+
+    const req = https.request(options, (res) => {
+      let raw = '';
+      res.on('data', (chunk) => { raw += chunk; });
+      res.on('end', () => {
+        resolve({ status: res.statusCode, body: raw });
+      });
+    });
+
+    req.on('error', reject);
+    req.write(data);
+    req.end();
+  });
+}
+
 function corsHeaders() {
   return {
     'Access-Control-Allow-Origin': '*',
@@ -44,7 +60,6 @@ function corsHeaders() {
   };
 }
 
-// ── Response helper ──
 function respond(statusCode, body) {
   return {
     statusCode,
@@ -53,42 +68,32 @@ function respond(statusCode, body) {
   };
 }
 
-// ── Main handler ──
 exports.handler = async (event) => {
-  // Preflight CORS
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: corsHeaders(), body: '' };
   }
 
-  // Solo POST
   if (event.httpMethod !== 'POST') {
     return respond(405, { error: 'Metodo non consentito.' });
   }
 
-  // API Key check
   const apiKey = process.env.GOOGLE_API_KEY;
   if (!apiKey) {
-    console.error('[AdsGenius] GOOGLE_API_KEY non configurata nelle variabili d\'ambiente.');
-    return respond(500, { error: 'Configurazione server mancante. Contatta il supporto.' });
+    console.error('[AdsGenius] GOOGLE_API_KEY mancante');
+    return respond(500, { error: 'Configurazione server mancante.' });
   }
 
-  // Parse body
   let product;
   try {
-    const body = JSON.parse(event.body || '{}');
-    product = (body.product || '').trim();
+    const parsed = JSON.parse(event.body || '{}');
+    product = (parsed.product || '').trim();
   } catch {
     return respond(400, { error: 'Formato richiesta non valido.' });
   }
 
-  if (!product) {
-    return respond(400, { error: 'Il campo prodotto è obbligatorio.' });
-  }
-  if (product.length > 800) {
-    return respond(400, { error: 'Descrizione troppo lunga (massimo 800 caratteri).' });
-  }
+  if (!product) return respond(400, { error: 'Campo prodotto obbligatorio.' });
+  if (product.length > 800) return respond(400, { error: 'Testo troppo lungo (max 800 caratteri).' });
 
-  // Build Gemini request
   const requestBody = {
     system_instruction: {
       parts: [{ text: SYSTEM_PROMPT }],
@@ -96,72 +101,39 @@ exports.handler = async (event) => {
     contents: [
       {
         role: 'user',
-        parts: [
-          {
-            text: `Crea un copy AIDA professionale per il seguente prodotto/servizio:\n\n${product}`,
-          },
-        ],
+        parts: [{ text: `Prodotto/servizio: ${product}` }],
       },
     ],
     generationConfig: {
       temperature: 0.88,
       topP: 0.93,
-      topK: 40,
       maxOutputTokens: 1400,
     },
-    safetySettings: [
-      { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-      { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-    ],
   };
 
   try {
-    const geminiRes = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(requestBody),
-    });
+    const result = await httpsPost(
+      'generativelanguage.googleapis.com',
+      '/v1beta/models/gemini-1.5-flash:generateContent',
+      apiKey,
+      requestBody
+    );
 
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      console.error(`[AdsGenius] Gemini API error ${geminiRes.status}:`, errText);
-
-      const errorMap = {
-        400: 'Richiesta non valida inviata a Gemini.',
-        403: 'Chiave API non autorizzata o scaduta.',
-        429: 'Troppe richieste. Attendi qualche secondo e riprova.',
-        500: 'Servizio Gemini temporaneamente non disponibile.',
-      };
-      const msg = errorMap[geminiRes.status] || `Errore API: ${geminiRes.status}`;
-      return respond(502, { error: msg });
+    if (result.status !== 200) {
+      console.error('[AdsGenius] Gemini status:', result.status, result.body.slice(0, 300));
+      const map = { 400: 'Richiesta non valida.', 403: 'API key non autorizzata.', 429: 'Troppe richieste, riprova.' };
+      return respond(502, { error: map[result.status] || `Errore Gemini: ${result.status}` });
     }
 
-    const data = await geminiRes.json();
-
-    // Extract text from Gemini response
+    const data = JSON.parse(result.body);
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
-    if (!text) {
-      console.error('[AdsGenius] Risposta Gemini vuota:', JSON.stringify(data));
-      return respond(502, { error: "L'AI non ha restituito contenuto. Riprova." });
-    }
-
-    // Validate that the response contains at least one AIDA tag
-    const hasAIDA = ['[ATTENZIONE]','[INTERESSE]','[DESIDERIO]','[AZIONE]']
-      .some(tag => text.includes(tag));
-
-    if (!hasAIDA) {
-      console.error('[AdsGenius] Risposta senza tag AIDA:', text.slice(0, 200));
-      return respond(502, { error: 'Formato risposta AI non valido. Riprova.' });
-    }
+    if (!text) return respond(502, { error: "L'AI non ha restituito contenuto. Riprova." });
 
     return respond(200, { text });
 
   } catch (err) {
-    console.error('[AdsGenius] Errore interno:', err.message || err);
-    return respond(500, { error: 'Errore interno del server. Riprova tra poco.' });
+    console.error('[AdsGenius] Errore interno:', err.message);
+    return respond(500, { error: 'Errore interno del server.' });
   }
 };
-
