@@ -436,8 +436,8 @@
         <div class="rounded-2xl p-7 relative overflow-hidden border border-brand-500/40" style="background:linear-gradient(135deg,rgba(37,99,235,0.15) 0%,rgba(29,78,216,0.08) 100%)">
           <div class="absolute top-4 right-4 text-xs font-bold text-brand-400 bg-brand-500/15 border border-brand-500/25 rounded-full px-3 py-1">⭐ Popolare</div>
           <div class="text-sm font-bold text-brand-400 uppercase tracking-widest mb-4">Pro</div>
-          <div class="font-display text-4xl font-extrabold mb-1">€29</div>
-          <div class="text-slate-500 text-sm mb-6">una tantum</div>
+          <div class="font-display text-4xl font-extrabold mb-1">€9,90</div>
+          <div class="text-slate-500 text-sm mb-6">al mese</div>
           <ul class="space-y-3 text-sm text-slate-300 mb-8">
             <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Generazioni illimitate</li>
             <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Framework AIDA completo</li>
@@ -446,7 +446,7 @@
           </ul>
           <a href="https://buy.stripe.com/aFa7sN0nE4Y0ggSbNggYU05" target="_blank" rel="noopener"
             class="block text-center py-2.5 text-sm font-bold text-white bg-brand-600 hover:bg-brand-500 rounded-xl transition shadow-glow-blue-sm">
-            Acquista Ora →
+            Abbonati Ora →
           </a>
         </div>
 
@@ -518,7 +518,7 @@
           <ul class="space-y-2 text-xs text-slate-500">
             <li><button onclick="showLegal('termini')" class="hover:text-slate-300 transition">Termini di Servizio</button></li>
             <li><button onclick="showLegal('privacy')" class="hover:text-slate-300 transition">Privacy Policy</button></li>
-            <li><a href="mailto:info@adsgenius.it" class="hover:text-slate-300 transition">info@adsgenius.it</a></li>
+            <li><a href="/cdn-cgi/l/email-protection#3a53545c557a5b5e495d5f54534f4914534e" class="hover:text-slate-300 transition"><span class="__cf_email__" data-cfemail="0f666169604f6e6b7c686a61667a7c21667b">[email&#160;protected]</span></a></li>
           </ul>
         </div>
 
@@ -542,7 +542,7 @@
   <!-- ═══════════════════════════════════════
        JAVASCRIPT
   ═══════════════════════════════════════ -->
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   /* ─── CONFIG ─── */
   const MAX_FREE   = 3;
   const MAX_ARCHIVE = 5;
@@ -829,16 +829,4 @@
     document.getElementById('char-count').textContent = '0';
   });
   document.getElementById('btn-clear').addEventListener('click', () => {
-    if (confirm('Cancellare tutti i testi salvati?')) {
-      localStorage.removeItem(LS_ARCHIVE);
-      renderArchive();
-    }
-  });
-
-  /* ─── INIT ─── */
-  refreshPill();
-  renderArchive();
-  if (getCredits() <= 0) show('paywall');
-  </script>
-</body>
-</html>
+    if (confirm('Cancellare tutti i
