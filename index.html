@@ -1,968 +1,844 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AdsGenius Italia — Copy AIDA professionale generato da AI in 5 secondi." />
-  <title>AdsGenius Italia ✦ Copy AI che Vende</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="AdsGenius Italia — Genera copy pubblicitari AIDA professionali con AI in 5 secondi."/>
+  <title>AdsGenius Italia — Copy AI che Vende</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50:  '#eff6ff',
+              100: '#dbeafe',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            },
+            surface: {
+              50:  '#f8fafc',
+              100: '#f1f5f9',
+              800: '#0f172a',
+              850: '#0b1221',
+              900: '#080e1c',
+              950: '#050810',
+            }
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease both',
+            'fade-in': 'fadeIn 0.4s ease both',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'shimmer': 'shimmer 1.8s ease infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '200% 0' },
+              '100%': { backgroundPosition: '-200% 0' },
+            },
+          },
+          backdropBlur: { xs: '4px' },
+          boxShadow: {
+            'glow-blue': '0 0 40px rgba(59,130,246,0.25)',
+            'glow-blue-sm': '0 0 20px rgba(59,130,246,0.18)',
+            'card': '0 8px 40px rgba(0,0,20,0.5)',
+          }
+        }
+      }
+    }
+  </script>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 
   <style>
-    /* ═══════════════════════════════════════════
-       DESIGN TOKENS
-    ═══════════════════════════════════════════ */
-    :root {
-      --black:      #050810;
-      --deep:       #080d1c;
-      --slate-900:  #0d1528;
-      --slate-800:  #162040;
-      --slate-700:  #1e2d55;
-      --blue-700:   #1d4ed8;
-      --blue-600:   #2563eb;
-      --blue-500:   #3b82f6;
-      --blue-400:   #60a5fa;
-      --cyan-400:   #22d3ee;
-      --emerald:    #10b981;
-      --amber:      #f59e0b;
-      --rose:       #f43f5e;
-      --violet:     #8b5cf6;
-      --white:      #eef2ff;
-      --white-70:   rgba(238,242,255,.70);
-      --white-35:   rgba(238,242,255,.35);
-      --white-12:   rgba(238,242,255,.12);
-      --white-06:   rgba(238,242,255,.06);
+    body { font-family: 'DM Sans', sans-serif; }
+    h1,h2,h3,.font-display { font-family: 'Syne', sans-serif; }
 
-      --glass-bg:     rgba(13,21,40,.65);
-      --glass-border: rgba(96,165,250,.18);
-
-      --ff-display: 'Syne', sans-serif;
-      --ff-body:    'DM Sans', sans-serif;
-
-      --r-sm:  12px;
-      --r-md:  18px;
-      --r-lg:  24px;
-      --r-xl:  32px;
-      --r-2xl: 44px;
-
-      --shadow-sm:   0 2px 12px rgba(0,0,20,.4);
-      --shadow-md:   0 8px 36px rgba(0,0,20,.55);
-      --shadow-blue: 0 6px 28px rgba(59,130,246,.35);
-    }
-
-    /* ═══════════════════════════════════════════
-       RESET + BASE
-    ═══════════════════════════════════════════ */
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-    body{
-      background:var(--black);
-      color:var(--white);
-      font-family:var(--ff-body);
-      font-size:16px;
-      line-height:1.65;
-      overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
-      min-height:100dvh;
-    }
-    button{cursor:pointer;font-family:var(--ff-body);border:none;background:none}
-    a{color:inherit;text-decoration:none}
-    textarea,input{font-family:var(--ff-body)}
-
-    /* ═══════════════════════════════════════════
-       AMBIENT BACKGROUND
-    ═══════════════════════════════════════════ */
-    .ambient{
-      position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
-    }
-    .orb{
-      position:absolute;border-radius:50%;filter:blur(120px);
-      animation:pulse-orb 9s ease-in-out infinite alternate;
-    }
-    .orb-1{
-      width:70vw;height:70vw;max-width:700px;max-height:700px;
-      background:radial-gradient(circle,rgba(37,99,235,.18) 0%,transparent 70%);
-      top:-20%;left:-20%;
-    }
-    .orb-2{
-      width:50vw;height:50vw;max-width:500px;max-height:500px;
-      background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 70%);
-      bottom:-15%;right:-15%;
-      animation-delay:-4s;animation-direction:alternate-reverse;
-    }
-    @keyframes pulse-orb{
-      from{transform:scale(1) translate(0,0)}
-      to{transform:scale(1.12) translate(20px,-15px)}
-    }
-
-    /* Floating particles */
-    .particles{position:fixed;inset:0;pointer-events:none;z-index:0}
-    .particle{
-      position:absolute;width:2px;height:2px;border-radius:50%;
-      background:var(--blue-400);box-shadow:0 0 6px var(--blue-400);
-      opacity:0;bottom:-5px;
-      animation:float-up linear infinite;
-    }
-    @keyframes float-up{
-      0%{opacity:0;transform:translateY(0) scale(.5)}
-      10%{opacity:.7}90%{opacity:.15}
-      100%{opacity:0;transform:translateY(-100vh) scale(1.4)}
-    }
-
-    /* ═══════════════════════════════════════════
-       LAYOUT WRAPPER
-    ═══════════════════════════════════════════ */
-    #app{
-      position:relative;z-index:1;
-      min-height:100dvh;
-      display:flex;flex-direction:column;
+    /* Ambient background */
+    .bg-ambient {
       background:
-        radial-gradient(ellipse 80% 45% at 15% 0%,rgba(37,99,235,.10) 0%,transparent 60%),
-        radial-gradient(ellipse 55% 35% at 85% 100%,rgba(139,92,246,.08) 0%,transparent 55%),
-        var(--deep);
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(37,99,235,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 100%, rgba(99,102,241,0.09) 0%, transparent 55%),
+        #080e1c;
     }
 
-    /* ═══════════════════════════════════════════
-       GLASS UTILITY
-    ═══════════════════════════════════════════ */
-    .glass{
-      background:var(--glass-bg);
-      backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
-      border:1px solid var(--glass-border);
-      border-radius:var(--r-xl);
-      box-shadow:var(--shadow-md);
+    /* Glass card */
+    .glass {
+      background: rgba(11,18,33,0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(96,165,250,0.15);
     }
 
-    /* ═══════════════════════════════════════════
-       NAVBAR
-    ═══════════════════════════════════════════ */
-    .navbar{
-      position:sticky;top:0;z-index:100;
-      background:rgba(5,8,16,.8);
-      backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-      border-bottom:1px solid rgba(96,165,250,.10);
-    }
-    .nav-inner{
-      max-width:960px;margin:0 auto;
-      padding:.85rem 1.25rem;
-      display:flex;align-items:center;justify-content:space-between;gap:1rem;
-    }
-    .logo{display:flex;align-items:center;gap:.5rem}
-    .logo-icon{color:var(--blue-400);animation:spin 10s linear infinite;display:flex}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .logo-text{
-      font-family:var(--ff-display);font-size:1.2rem;font-weight:800;
-      letter-spacing:-.025em;color:var(--white);
-    }
-    .logo-text span{color:var(--blue-400)}
-    .logo-sub{font-size:.7rem;font-weight:400;color:var(--white-35);vertical-align:middle;margin-left:2px}
-
-    /* Credits pill */
-    .credits-pill{
-      display:flex;align-items:center;gap:.45rem;
-      background:rgba(96,165,250,.08);
-      border:1px solid rgba(96,165,250,.22);
-      border-radius:999px;padding:.35rem .9rem;
-      font-size:.82rem;font-weight:500;
-      color:var(--blue-400);white-space:nowrap;
-    }
-    .credits-pill.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:var(--amber)}
-    .credits-pill.empty{background:rgba(244,63,94,.08);border-color:rgba(244,63,94,.25);color:var(--rose)}
-
-    /* ═══════════════════════════════════════════
-       HERO
-    ═══════════════════════════════════════════ */
-    .hero{
-      padding:3.5rem 1.25rem 2.5rem;
-      text-align:center;
-    }
-    .hero-eyebrow{
-      display:inline-flex;align-items:center;gap:.45rem;
-      font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
-      color:var(--blue-400);
-      background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);
-      border-radius:999px;padding:.38rem 1rem;margin-bottom:1.4rem;
-      animation:fade-up .7s ease both;
-    }
-    .hero-title{
-      font-family:var(--ff-display);
-      font-size:clamp(2rem,6vw,3.8rem);
-      font-weight:800;line-height:1.08;letter-spacing:-.035em;
-      color:var(--white);margin-bottom:1rem;
-      animation:fade-up .7s ease .12s both;
-    }
-    .hero-title .grad{
-      background:linear-gradient(120deg,var(--blue-400) 0%,var(--cyan-400) 100%);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-    }
-    .hero-sub{
-      font-size:1.05rem;color:var(--white-70);max-width:540px;margin:0 auto 2rem;
-      animation:fade-up .7s ease .24s both;
+    /* Gradient text */
+    .text-gradient {
+      background: linear-gradient(120deg, #60a5fa 0%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* ═══════════════════════════════════════════
-       MAIN AREA
-    ═══════════════════════════════════════════ */
-    .main{
-      max-width:840px;margin:0 auto;
-      padding:0 1.25rem 4rem;
-      flex:1;
-      display:flex;flex-direction:column;gap:1.5rem;
+    /* Shimmer skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0.05) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.8s ease infinite;
     }
 
-    /* ═══════════════════════════════════════════
-       INPUT CARD
-    ═══════════════════════════════════════════ */
-    .input-card{padding:1.5rem}
-    .input-label{
-      display:block;font-size:.8rem;font-weight:600;letter-spacing:.05em;
-      text-transform:uppercase;color:var(--blue-400);margin-bottom:.75rem;
-    }
-    .product-textarea{
-      width:100%;background:rgba(255,255,255,.04);
-      border:1px solid rgba(96,165,250,.2);border-radius:var(--r-md);
-      color:var(--white);font-size:.97rem;line-height:1.6;
-      padding:1rem 1.1rem;resize:none;outline:none;
-      transition:border-color .2s,box-shadow .2s;
-      caret-color:var(--blue-400);
-    }
-    .product-textarea::placeholder{color:var(--white-35)}
-    .product-textarea:focus{
-      border-color:rgba(96,165,250,.5);
-      box-shadow:0 0 0 3px rgba(59,130,246,.12);
-    }
-    .input-footer{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:.75rem;margin-top:1rem;flex-wrap:wrap;
-    }
-    .char-count{font-size:.78rem;color:var(--white-35)}
-
-    /* Generate button */
-    .btn-generate{
-      display:flex;align-items:center;gap:.55rem;
-      font-family:var(--ff-display);font-size:1rem;font-weight:700;
-      color:#fff;
-      background:linear-gradient(135deg,var(--blue-700) 0%,var(--blue-500) 100%);
-      border-radius:999px;padding:.75rem 2rem;
-      transition:transform .2s,box-shadow .2s,opacity .2s;
-      box-shadow:var(--shadow-blue);
-      white-space:nowrap;
-    }
-    .btn-generate:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 32px rgba(59,130,246,.5)}
-    .btn-generate:disabled{opacity:.45;transform:none;cursor:not-allowed}
-    .btn-generate.loading{background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%)}
-
-    /* Spinner */
-    .spinner{
-      width:16px;height:16px;flex-shrink:0;
-      border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
-      border-radius:50%;animation:spin .7s linear infinite;
+    /* Orb */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      animation: pulse 8s ease-in-out infinite alternate;
     }
 
-    /* ═══════════════════════════════════════════
-       AIDA CARDS
-    ═══════════════════════════════════════════ */
-    .results-grid{
-      display:grid;grid-template-columns:1fr 1fr;
-      gap:1rem;
-      animation:fade-up .5s ease both;
-    }
-    @media(max-width:580px){.results-grid{grid-template-columns:1fr}}
+    /* Mobile menu */
+    #mobile-menu { transition: all 0.3s ease; }
 
-    .aida-card{
-      padding:1.35rem;
-      border-radius:var(--r-lg);
-      transition:transform .25s,box-shadow .25s,opacity .5s,translate .5s;
-      opacity:0;translate:0 18px;will-change:opacity,translate;
-    }
-    .aida-card.visible{opacity:1!important;translate:0 0!important}
-    .aida-card:nth-child(1){transition-delay:.05s;--glow:#3b82f6;--c1:rgba(59,130,246,.18);--c2:rgba(34,211,238,.08);border-color:rgba(59,130,246,.35)!important}
-    .aida-card:nth-child(2){transition-delay:.14s;--glow:#8b5cf6;--c1:rgba(139,92,246,.18);--c2:rgba(99,102,241,.08);border-color:rgba(139,92,246,.35)!important}
-    .aida-card:nth-child(3){transition-delay:.23s;--glow:#f97316;--c1:rgba(249,115,22,.18);--c2:rgba(245,158,11,.08);border-color:rgba(249,115,22,.35)!important}
-    .aida-card:nth-child(4){transition-delay:.32s;--glow:#10b981;--c1:rgba(16,185,129,.18);--c2:rgba(20,184,166,.08);border-color:rgba(16,185,129,.35)!important}
-    .aida-card{background:linear-gradient(135deg,var(--c1) 0%,var(--c2) 100%)}
-    .aida-card:hover{transform:translateY(-3px);box-shadow:0 0 32px color-mix(in srgb,var(--glow) 22%,transparent)}
+    /* Card hover glow */
+    .aida-card { transition: transform 0.25s, box-shadow 0.25s; }
+    .aida-card:hover { transform: translateY(-3px); }
 
-    .card-head{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1rem}
-    .card-emoji{font-size:1.5rem;flex-shrink:0;filter:drop-shadow(0 0 8px var(--glow))}
-    .card-meta{flex:1;min-width:0}
-    .card-label{font-family:var(--ff-display);font-size:.95rem;font-weight:700;letter-spacing:-.01em}
-    .card-desc{font-size:.75rem;color:var(--white-35);margin-top:1px}
-    .btn-copy{
-      flex-shrink:0;
-      background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
-      border-radius:8px;color:var(--white-70);
-      font-size:.8rem;padding:.3rem .6rem;
-      display:flex;align-items:center;gap:.3rem;
-      transition:background .2s,color .2s;
-    }
-    .btn-copy:hover{background:rgba(255,255,255,.13);color:var(--white)}
-    .btn-copy.copied{color:var(--emerald);border-color:rgba(16,185,129,.4)}
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #080e1c; }
+    ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 3px; }
 
-    .card-body-text{
-      font-size:.92rem;line-height:1.68;color:var(--white-70);
-      white-space:pre-wrap;word-break:break-word;
+    @keyframes pulse {
+      from { transform: scale(1); opacity: 0.6; }
+      to   { transform: scale(1.15); opacity: 0.9; }
     }
-
-    /* ── Skeleton shimmer ── */
-    .skeleton-grid{
-      display:grid;grid-template-columns:1fr 1fr;gap:1rem;
-    }
-    @media(max-width:580px){.skeleton-grid{grid-template-columns:1fr}}
-    .skeleton-card{
-      border-radius:var(--r-lg);padding:1.35rem;
-      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-      display:flex;flex-direction:column;gap:.7rem;
-    }
-    .skel{
-      height:12px;border-radius:6px;
-      background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.11) 50%,rgba(255,255,255,.06) 75%);
-      background-size:200% 100%;
-      animation:shimmer 1.6s ease infinite;
-    }
-    .skel.w-40{width:40%}.skel.w-70{width:70%}.skel.w-55{width:55%}
-    .skel.h-tall{height:68px;border-radius:8px}
-    @keyframes shimmer{
-      0%{background-position:200% 0}
-      100%{background-position:-200% 0}
-    }
-
-    /* ═══════════════════════════════════════════
-       ERROR BANNER
-    ═══════════════════════════════════════════ */
-    .error-banner{
-      background:rgba(244,63,94,.10);border:1px solid rgba(244,63,94,.28);
-      border-radius:var(--r-sm);padding:.9rem 1.1rem;
-      color:#fda4af;font-size:.88rem;display:flex;align-items:flex-start;gap:.6rem;
-    }
-
-    /* ═══════════════════════════════════════════
-       PAYWALL CARD
-    ═══════════════════════════════════════════ */
-    .paywall-card{
-      padding:2rem 1.75rem;text-align:center;
-      border-color:rgba(245,158,11,.3)!important;
-      background:linear-gradient(135deg,rgba(245,158,11,.08) 0%,rgba(249,115,22,.05) 100%)!important;
-      animation:fade-up .5s ease both;
-    }
-    .paywall-icon{font-size:2.8rem;margin-bottom:1rem;filter:drop-shadow(0 0 16px rgba(245,158,11,.5))}
-    .paywall-title{
-      font-family:var(--ff-display);font-size:1.5rem;font-weight:800;
-      letter-spacing:-.02em;margin-bottom:.75rem;
-    }
-    .paywall-body{font-size:.97rem;color:var(--white-70);max-width:420px;margin:0 auto 1.6rem;line-height:1.65}
-    .paywall-price{
-      display:inline-block;font-family:var(--ff-display);font-size:.85rem;font-weight:700;
-      color:var(--amber);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);
-      border-radius:999px;padding:.3rem .9rem;margin-bottom:1.5rem;
-    }
-    .btn-upgrade{
-      display:inline-flex;align-items:center;gap:.6rem;
-      font-family:var(--ff-display);font-size:1.05rem;font-weight:700;color:#fff;
-      background:linear-gradient(135deg,#d97706 0%,#f59e0b 100%);
-      border-radius:999px;padding:.85rem 2.2rem;
-      box-shadow:0 6px 28px rgba(245,158,11,.4);
-      transition:transform .2s,box-shadow .2s;
-    }
-    .btn-upgrade:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(245,158,11,.55)}
-    .paywall-note{font-size:.75rem;color:var(--white-35);margin-top:.9rem}
-
-    /* ═══════════════════════════════════════════
-       ARCHIVE SECTION
-    ═══════════════════════════════════════════ */
-    .archive-section{animation:fade-up .6s ease .1s both}
-    .section-head{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:1rem;margin-bottom:1rem;
-    }
-    .section-title{
-      font-family:var(--ff-display);font-size:1.1rem;font-weight:700;
-      letter-spacing:-.01em;display:flex;align-items:center;gap:.5rem;
-    }
-    .section-title svg{color:var(--blue-400)}
-    .btn-clear-archive{
-      font-size:.76rem;color:var(--white-35);
-      background:none;border:1px solid rgba(255,255,255,.1);
-      border-radius:8px;padding:.28rem .65rem;
-      transition:color .2s,border-color .2s;
-    }
-    .btn-clear-archive:hover{color:var(--rose);border-color:rgba(244,63,94,.3)}
-
-    .archive-list{display:flex;flex-direction:column;gap:.75rem}
-    .archive-item{
-      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-      border-radius:var(--r-md);overflow:hidden;
-      transition:border-color .2s;
-    }
-    .archive-item:hover{border-color:rgba(96,165,250,.22)}
-    .archive-item-head{
-      display:flex;align-items:center;gap:.75rem;
-      padding:.9rem 1.1rem;cursor:pointer;
-    }
-    .archive-product{
-      flex:1;min-width:0;font-size:.9rem;font-weight:500;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
-    .archive-date{font-size:.72rem;color:var(--white-35);white-space:nowrap}
-    .archive-expand{color:var(--white-35);transition:transform .25s;flex-shrink:0;display:flex}
-    .archive-expand.open{transform:rotate(180deg)}
-
-    .archive-content{
-      display:none;padding:.75rem 1.1rem 1.1rem;border-top:1px solid rgba(255,255,255,.06);
-    }
-    .archive-content.open{display:block}
-    .archive-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-    @media(max-width:480px){.archive-mini-grid{grid-template-columns:1fr}}
-
-    .archive-mini-card{
-      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-      border-radius:10px;padding:.75rem;
-    }
-    .archive-mini-label{
-      font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
-      color:var(--blue-400);margin-bottom:.4rem;
-    }
-    .archive-mini-text{
-      font-size:.82rem;color:var(--white-70);line-height:1.55;
-      max-height:80px;overflow:hidden;position:relative;
-    }
-    .archive-mini-text::after{
-      content:'';position:absolute;bottom:0;left:0;right:0;height:24px;
-      background:linear-gradient(transparent,rgba(13,21,40,.9));
-    }
-    .archive-mini-actions{
-      display:flex;justify-content:flex-end;margin-top:.5rem;
-    }
-    .btn-copy-mini{
-      font-size:.74rem;padding:.22rem .55rem;
-      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-      border-radius:6px;color:var(--white-35);
-      display:flex;align-items:center;gap:.3rem;
-      transition:background .2s,color .2s;
-    }
-    .btn-copy-mini:hover{background:rgba(255,255,255,.11);color:var(--white)}
-    .btn-copy-mini.copied{color:var(--emerald)}
-
-    /* ═══════════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════════ */
-    .footer{
-      border-top:1px solid rgba(96,165,250,.08);
-      padding:2rem 1.25rem;text-align:center;
-      font-size:.78rem;color:var(--white-35);
-      display:flex;flex-direction:column;gap:.55rem;align-items:center;
-    }
-    .footer-logo{font-family:var(--ff-display);font-size:.95rem;font-weight:700;color:var(--white-70)}
-    .footer-logo span{color:var(--blue-400)}
-    .footer-note{max-width:480px;line-height:1.55}
-    .footer-links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
-    .footer-links a{color:var(--blue-400);transition:color .2s}
-    .footer-links a:hover{color:var(--cyan-400)}
-
-    /* ═══════════════════════════════════════════
-       UTILITY ANIMATIONS
-    ═══════════════════════════════════════════ */
-    @keyframes fade-up{
-      from{opacity:0;transform:translateY(18px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-    .hidden{display:none!important}
-
-    /* ═══════════════════════════════════════════
-       TOAST
-    ═══════════════════════════════════════════ */
-    .toast{
-      position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);
-      background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);
-      backdrop-filter:blur(16px);border-radius:999px;
-      color:#6ee7b7;font-size:.85rem;font-weight:500;
-      padding:.55rem 1.3rem;z-index:999;
-      opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;
-    }
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   </style>
 </head>
 
-<body>
-  <!-- Ambient BG -->
-  <div class="ambient">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-  </div>
-  <div class="particles" id="particles"></div>
+<body class="bg-ambient text-slate-100 min-h-screen">
 
-  <!-- App Root -->
-  <div id="app">
+  <!-- Ambient orbs -->
+  <div class="orb w-96 h-96 bg-blue-700/20 top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
+  <div class="orb w-80 h-80 bg-indigo-600/15 bottom-0 right-0 translate-x-1/3 translate-y-1/3" style="animation-direction:alternate-reverse"></div>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-      <div class="nav-inner">
-        <div class="logo">
-          <div class="logo-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 border-b border-white/[0.06]" style="background:rgba(5,8,16,0.85);backdrop-filter:blur(24px)">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2 flex-shrink-0">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-glow-blue-sm">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           </div>
-          <div class="logo-text">Ads<span>Genius</span><span class="logo-sub"> Italia</span></div>
+          <span class="font-display text-lg font-bold tracking-tight">Ads<span class="text-brand-400">Genius</span><span class="text-slate-500 text-sm font-normal ml-1">Italia</span></span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-1">
+          <a href="#come-funziona" class="px-4 py-2 text-sm text-slate-400 hover:text-white rounded-lg hover:bg-white/[0.06] transition-all">Come Funziona</a>
+          <a href="#prezzi" class="px-4 py-2 text-sm text-slate-400 hover:text-white rounded-lg hover:bg-white/[0.06] transition-all">Prezzi</a>
+          <a href="#guida" class="px-4 py-2 text-sm text-slate-400 hover:text-white rounded-lg hover:bg-white/[0.06] transition-all">Guida</a>
+          <a href="#genera" class="ml-2 px-5 py-2 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-500 rounded-lg transition-all shadow-glow-blue-sm">
+            Inizia Gratis →
+          </a>
         </div>
-        <div class="credits-pill" id="credits-pill">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+
+        <!-- Mobile hamburger -->
+        <button id="btn-menu" class="md:hidden p-2 rounded-lg hover:bg-white/[0.08] transition" aria-label="Menu">
+          <svg id="icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-white/[0.06] mt-2 pt-3 space-y-1">
+        <a href="#come-funziona" class="block px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-white/[0.06] rounded-lg" onclick="closeMobileMenu()">Come Funziona</a>
+        <a href="#prezzi" class="block px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-white/[0.06] rounded-lg" onclick="closeMobileMenu()">Prezzi</a>
+        <a href="#guida" class="block px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-white/[0.06] rounded-lg" onclick="closeMobileMenu()">Guida</a>
+        <div class="px-4 pt-2">
+          <a href="#genera" class="block text-center py-2.5 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-500 rounded-lg transition" onclick="closeMobileMenu()">Inizia Gratis →</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section class="relative z-10 pt-16 pb-12 px-4 text-center overflow-hidden">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase text-brand-400 border border-brand-500/25 bg-brand-500/8 mb-8 animate-fade-up">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse-slow"></span>
+        🇮🇹 Il Copywriter AI per il Mercato Italiano
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.07] mb-5" style="animation:fadeUp 0.7s ease 0.1s both">
+        Trasforma un'idea in un<br>
+        <span class="text-gradient">annuncio che vende.</span>
+      </h1>
+
+      <p class="text-lg text-slate-400 max-w-xl mx-auto mb-8 leading-relaxed" style="animation:fadeUp 0.7s ease 0.2s both">
+        Framework AIDA professionale generato da AI in pochi secondi. Copia e incolla su Meta, Google Ads e TikTok.
+      </p>
+
+      <!-- Stats -->
+      <div class="flex items-center justify-center gap-6 sm:gap-10 mb-10" style="animation:fadeUp 0.7s ease 0.3s both">
+        <div class="text-center">
+          <div class="font-display text-2xl font-bold text-brand-400">4</div>
+          <div class="text-xs text-slate-500 uppercase tracking-wider mt-0.5">Sezioni AIDA</div>
+        </div>
+        <div class="w-px h-10 bg-white/10"></div>
+        <div class="text-center">
+          <div class="font-display text-2xl font-bold text-brand-400">5s</div>
+          <div class="text-xs text-slate-500 uppercase tracking-wider mt-0.5">Generazione</div>
+        </div>
+        <div class="w-px h-10 bg-white/10"></div>
+        <div class="text-center">
+          <div class="font-display text-2xl font-bold text-brand-400">3</div>
+          <div class="text-xs text-slate-500 uppercase tracking-wider mt-0.5">Prove Gratis</div>
+        </div>
+      </div>
+
+      <a href="#genera" class="inline-flex items-center gap-2 px-8 py-3.5 text-base font-bold text-white bg-brand-600 hover:bg-brand-500 rounded-xl shadow-glow-blue transition-all" style="animation:fadeUp 0.7s ease 0.4s both">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Genera il Tuo Copy Gratis
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       COME FUNZIONA
+  ═══════════════════════════════════════ -->
+  <section id="come-funziona" class="relative z-10 py-16 px-4">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-brand-400 mb-3">Semplice come scrivere un SMS</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight">Come Funziona</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Step 1 -->
+        <div class="glass rounded-2xl p-7 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-blue-500/10 transition-all"></div>
+          <div class="w-12 h-12 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          </div>
+          <div class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Passo 1</div>
+          <h3 class="font-display text-lg font-bold mb-2">Descrivi il prodotto</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Scrivi cosa vendi in poche parole. Più dettagli dai, più il copy sarà preciso e personalizzato.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass rounded-2xl p-7 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-indigo-500/10 transition-all"></div>
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/15 border border-indigo-500/25 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <div class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2">Passo 2</div>
+          <h3 class="font-display text-lg font-bold mb-2">L'AI genera il copy</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Gemini AI analizza il tuo prodotto e crea 4 sezioni AIDA professionali ottimizzate per convertire.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass rounded-2xl p-7 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full -translate-y-8 translate-x-8 group-hover:bg-emerald-500/10 transition-all"></div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2">Passo 3</div>
+          <h3 class="font-display text-lg font-bold mb-2">Copia e pubblica</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Copia ogni sezione con un click e incollala direttamente su Meta Ads, Google Ads o TikTok.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       GENERA (APP AREA)
+  ═══════════════════════════════════════ -->
+  <section id="genera" class="relative z-10 py-16 px-4">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="text-center mb-10">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">Genera il Tuo Copy AIDA</h2>
+        <p class="text-slate-400">Descrivi il prodotto e lascia fare all'AI.</p>
+      </div>
+
+      <!-- Credits pill -->
+      <div class="flex justify-center mb-6">
+        <div id="credits-pill" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           <span id="credits-text">3 prove gratuite</span>
         </div>
       </div>
-    </nav>
 
-    <!-- HERO -->
-    <header class="hero">
-      <div class="hero-eyebrow">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        🇮🇹 Il Copywriter AI per il Mercato Italiano
-      </div>
-      <h1 class="hero-title">
-        Trasforma un'idea<br>in un annuncio <span class="grad">che vende.</span>
-      </h1>
-      <p class="hero-sub">Framework AIDA professionale. Generato in secondi. Pronto per Meta, Google e TikTok.</p>
-    </header>
-
-    <!-- MAIN -->
-    <main class="main">
-
-      <!-- INPUT CARD -->
-      <div class="glass input-card">
-        <label class="input-label" for="product-input">
+      <!-- Input Card -->
+      <div class="glass rounded-2xl p-6 mb-4">
+        <label class="block text-xs font-bold tracking-widest uppercase text-brand-400 mb-3">
           💡 Cosa vuoi vendere oggi?
         </label>
         <textarea
           id="product-input"
-          class="product-textarea"
           rows="4"
           maxlength="800"
-          placeholder="Es: Scarpe da trekking impermeabili per donne attive, prezzzo €89. Resistenti, leggere, disponibili in 6 colori..."
+          placeholder="Es: Scarpe da trekking impermeabili per donne attive, €89. Resistenti, ultraleggere, disponibili in 6 colori. Spedizione gratuita..."
+          class="w-full bg-white/[0.04] border border-white/[0.10] hover:border-brand-500/40 focus:border-brand-500/60 focus:ring-2 focus:ring-brand-500/15 rounded-xl text-slate-100 placeholder-slate-600 text-sm leading-relaxed p-4 resize-none outline-none transition-all"
         ></textarea>
-        <div class="input-footer">
-          <span class="char-count"><span id="char-count">0</span>/800</span>
-          <button class="btn-generate" id="btn-generate">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            Genera Magia
+        <div class="flex items-center justify-between mt-4 gap-3 flex-wrap">
+          <span class="text-xs text-slate-600"><span id="char-count">0</span>/800</span>
+          <button id="btn-generate"
+            class="flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-white bg-brand-600 hover:bg-brand-500 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-all shadow-glow-blue-sm">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span id="btn-text">Genera Magia</span>
           </button>
         </div>
       </div>
 
-      <!-- ERROR -->
-      <div class="error-banner hidden" id="error-banner">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <!-- Error banner -->
+      <div id="error-banner" class="hidden mb-4 flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/25 text-red-300 text-sm">
+        <svg class="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <span id="error-text"></span>
       </div>
 
-      <!-- SKELETON (loading) -->
-      <div class="skeleton-grid hidden" id="skeleton">
-        <div class="skeleton-card"><div class="skel w-40"></div><div class="skel h-tall"></div><div class="skel w-70"></div><div class="skel w-55"></div></div>
-        <div class="skeleton-card"><div class="skel w-40"></div><div class="skel h-tall"></div><div class="skel w-70"></div><div class="skel w-55"></div></div>
-        <div class="skeleton-card"><div class="skel w-40"></div><div class="skel h-tall"></div><div class="skel w-70"></div><div class="skel w-55"></div></div>
-        <div class="skeleton-card"><div class="skel w-40"></div><div class="skel h-tall"></div><div class="skel w-70"></div><div class="skel w-55"></div></div>
+      <!-- Skeleton -->
+      <div id="skeleton" class="hidden space-y-4">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="glass rounded-2xl p-5 space-y-3">
+            <div class="skeleton h-3 w-1/3 rounded-full"></div>
+            <div class="skeleton h-20 w-full rounded-lg"></div>
+            <div class="skeleton h-3 w-2/3 rounded-full"></div>
+          </div>
+          <div class="glass rounded-2xl p-5 space-y-3">
+            <div class="skeleton h-3 w-1/3 rounded-full"></div>
+            <div class="skeleton h-20 w-full rounded-lg"></div>
+            <div class="skeleton h-3 w-2/3 rounded-full"></div>
+          </div>
+          <div class="glass rounded-2xl p-5 space-y-3">
+            <div class="skeleton h-3 w-1/3 rounded-full"></div>
+            <div class="skeleton h-20 w-full rounded-lg"></div>
+            <div class="skeleton h-3 w-2/3 rounded-full"></div>
+          </div>
+          <div class="glass rounded-2xl p-5 space-y-3">
+            <div class="skeleton h-3 w-1/3 rounded-full"></div>
+            <div class="skeleton h-20 w-full rounded-lg"></div>
+            <div class="skeleton h-3 w-2/3 rounded-full"></div>
+          </div>
+        </div>
+        <p class="text-center text-xs text-slate-600 animate-pulse">⚡ Sto analizzando il tuo prodotto...</p>
       </div>
 
-      <!-- RESULTS -->
-      <div class="results-grid hidden" id="results-grid"></div>
+      <!-- AIDA Results -->
+      <div id="results" class="hidden">
+        <div class="grid sm:grid-cols-2 gap-4 mb-4" id="results-grid"></div>
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <p class="text-xs text-slate-600">💡 Clicca il tasto copia su ogni card</p>
+          <button id="btn-reset" class="text-xs text-slate-500 hover:text-slate-300 border border-white/10 hover:border-white/20 px-4 py-2 rounded-lg transition">
+            ↺ Nuova Generazione
+          </button>
+        </div>
+      </div>
 
-      <!-- RESET -->
-      <div class="hidden" id="reset-area" style="text-align:right">
-        <button id="btn-reset" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;color:var(--white-70);font-size:.88rem;padding:.5rem 1.3rem;transition:background .2s">
-          ↺ Nuova Generazione
+      <!-- Paywall -->
+      <div id="paywall" class="hidden glass rounded-2xl p-8 text-center border-amber-500/25" style="border-color:rgba(245,158,11,0.25);background:linear-gradient(135deg,rgba(245,158,11,0.07) 0%,rgba(249,115,22,0.05) 100%)">
+        <div class="text-5xl mb-4">🔒</div>
+        <h3 class="font-display text-2xl font-bold mb-3">Hai usato le 3 prove gratuite</h3>
+        <p class="text-slate-400 max-w-sm mx-auto mb-6 leading-relaxed">
+          Smetti di pagare agenzie costose. Ottieni copy professionali illimitati a meno di un caffè al giorno.
+        </p>
+        <div class="inline-block text-xs font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 rounded-full px-4 py-1.5 mb-6">
+          ☕ Meno di €1 al giorno · Accesso illimitato
+        </div>
+        <br>
+        <a href="https://buy.stripe.com/aFa7sN0nE4Y0ggSbNggYU05" target="_blank" rel="noopener"
+          class="inline-flex items-center gap-2 px-8 py-3.5 text-base font-bold text-white rounded-xl transition-all"
+          style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 6px 28px rgba(245,158,11,0.4)">
+          ✦ Sblocca Accesso Illimitato →
+        </a>
+        <p class="text-xs text-slate-600 mt-4">Pagamento sicuro via Stripe · Cancella quando vuoi</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       ARCHIVIO
+  ═══════════════════════════════════════ -->
+  <section id="archivio-section" class="hidden relative z-10 py-8 px-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-display text-xl font-bold flex items-center gap-2">
+          <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          Testi Recenti
+        </h2>
+        <button id="btn-clear" class="text-xs text-slate-600 hover:text-red-400 border border-white/10 hover:border-red-500/25 px-3 py-1.5 rounded-lg transition">
+          Cancella tutto
         </button>
       </div>
+      <div id="archive-list" class="space-y-3"></div>
+    </div>
+  </section>
 
-      <!-- PAYWALL -->
-      <div class="glass paywall-card hidden" id="paywall">
-        <div class="paywall-icon">🔒</div>
-        <h2 class="paywall-title">Hai usato le tue 3 prove gratuite</h2>
-        <p class="paywall-body">Smetti di pagare agenzie costose. Ottieni copy professionali illimitati a meno di un caffè al giorno.</p>
-        <div class="paywall-price">☕ Meno di 1€ al giorno · Accesso illimitato</div>
-        <a class="btn-upgrade" href="https://buy.stripe.com/aFa7sN0nE4Y0ggSbNggYU05" target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          Sblocca Accesso Illimitato →
-        </a>
-        <p class="paywall-note">Pagamento sicuro via Stripe · Cancella quando vuoi</p>
+  <!-- ═══════════════════════════════════════
+       PREZZI
+  ═══════════════════════════════════════ -->
+  <section id="prezzi" class="relative z-10 py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-brand-400 mb-3">Trasparente e semplice</div>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight">Prezzi</h2>
       </div>
+      <div class="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
 
-      <!-- ARCHIVE -->
-      <section class="archive-section hidden" id="archive-section">
-        <div class="section-head">
-          <h2 class="section-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-            I tuoi testi recenti
-          </h2>
-          <button class="btn-clear-archive" id="btn-clear-archive">Cancella tutto</button>
+        <!-- Free -->
+        <div class="glass rounded-2xl p-7">
+          <div class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Gratuito</div>
+          <div class="font-display text-4xl font-extrabold mb-1">€0</div>
+          <div class="text-slate-500 text-sm mb-6">Per sempre</div>
+          <ul class="space-y-3 text-sm text-slate-300 mb-8">
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 3 generazioni gratuite</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Framework AIDA completo</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Archivio ultimi 5 risultati</li>
+            <li class="flex items-center gap-2"><span class="text-slate-600">✗</span> Generazioni illimitate</li>
+          </ul>
+          <a href="#genera" class="block text-center py-2.5 text-sm font-semibold border border-white/15 hover:border-white/25 rounded-xl transition">
+            Inizia Gratis
+          </a>
         </div>
-        <div class="archive-list" id="archive-list"></div>
-      </section>
 
-    </main>
+        <!-- Pro -->
+        <div class="rounded-2xl p-7 relative overflow-hidden border border-brand-500/40" style="background:linear-gradient(135deg,rgba(37,99,235,0.15) 0%,rgba(29,78,216,0.08) 100%)">
+          <div class="absolute top-4 right-4 text-xs font-bold text-brand-400 bg-brand-500/15 border border-brand-500/25 rounded-full px-3 py-1">⭐ Popolare</div>
+          <div class="text-sm font-bold text-brand-400 uppercase tracking-widest mb-4">Pro</div>
+          <div class="font-display text-4xl font-extrabold mb-1">€29</div>
+          <div class="text-slate-500 text-sm mb-6">una tantum</div>
+          <ul class="space-y-3 text-sm text-slate-300 mb-8">
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Generazioni illimitate</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Framework AIDA completo</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Archivio illimitato</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Nuovi modelli AI inclusi</li>
+          </ul>
+          <a href="https://buy.stripe.com/aFa7sN0nE4Y0ggSbNggYU05" target="_blank" rel="noopener"
+            class="block text-center py-2.5 text-sm font-bold text-white bg-brand-600 hover:bg-brand-500 rounded-xl transition shadow-glow-blue-sm">
+            Acquista Ora →
+          </a>
+        </div>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div class="footer-logo">Ads<span>Genius</span> Italia</div>
-      <p class="footer-note">I contenuti sono generati da intelligenza artificiale (Google Gemini) e forniti a scopo illustrativo. Non costituiscono consulenza professionale. Acquisti non rimborsabili una volta erogato il servizio.</p>
-      <div class="footer-links">
-        <a href="#" onclick="showLegal('termini');return false">Termini di Servizio</a>
-        <a href="#" onclick="showLegal('privacy');return false">Privacy Policy</a>
-        <a href="mailto:info@adsgenius.it">Contatti</a>
       </div>
-      <p>© 2025 AdsGenius Italia · Tutti i diritti riservati</p>
-    </footer>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       GUIDA
+  ═══════════════════════════════════════ -->
+  <section id="guida" class="relative z-10 py-16 px-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-10">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-brand-400 mb-3">Ottieni il massimo</div>
+        <h2 class="font-display text-3xl font-bold tracking-tight">Guida Rapida</h2>
+      </div>
+      <div class="glass rounded-2xl divide-y divide-white/[0.06]">
+        <div class="p-6">
+          <h3 class="font-semibold text-white mb-2 flex items-center gap-2">
+            <span class="text-brand-400 font-display font-bold">01</span> Cos'è il Framework AIDA?
+          </h3>
+          <p class="text-sm text-slate-400 leading-relaxed">AIDA (Attenzione, Interesse, Desiderio, Azione) è il modello di copywriting più usato al mondo. Ogni sezione ha uno scopo preciso per guidare il cliente dall'ignoranza all'acquisto.</p>
+        </div>
+        <div class="p-6">
+          <h3 class="font-semibold text-white mb-2 flex items-center gap-2">
+            <span class="text-brand-400 font-display font-bold">02</span> Come scrivere una descrizione efficace?
+          </h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Includi: nome del prodotto, beneficio principale, target ideale, prezzo se possibile e un elemento differenziante (es. "spedizione gratis", "garanzia 30 giorni"). Più dettagli = copy più preciso.</p>
+        </div>
+        <div class="p-6">
+          <h3 class="font-semibold text-white mb-2 flex items-center gap-2">
+            <span class="text-brand-400 font-display font-bold">03</span> Dove usare questi copy?
+          </h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Usa la sezione <strong class="text-white">Attenzione</strong> come titolo dell'ad, <strong class="text-white">Interesse + Desiderio</strong> come corpo del testo, e <strong class="text-white">Azione</strong> come call-to-action. Funziona su Meta, Google, LinkedIn e TikTok.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer class="relative z-10 border-t border-white/[0.06] py-12 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid sm:grid-cols-3 gap-8 mb-8">
+
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+              <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <span class="font-display font-bold text-sm">Ads<span class="text-brand-400">Genius</span> Italia</span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">Copywriting professionale AI per imprenditori e marketer italiani.</p>
+        </div>
+
+        <div>
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Prodotto</div>
+          <ul class="space-y-2 text-xs text-slate-500">
+            <li><a href="#come-funziona" class="hover:text-slate-300 transition">Come Funziona</a></li>
+            <li><a href="#prezzi" class="hover:text-slate-300 transition">Prezzi</a></li>
+            <li><a href="#guida" class="hover:text-slate-300 transition">Guida</a></li>
+            <li><a href="#genera" class="hover:text-slate-300 transition">Genera Copy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Legale</div>
+          <ul class="space-y-2 text-xs text-slate-500">
+            <li><button onclick="showLegal('termini')" class="hover:text-slate-300 transition">Termini di Servizio</button></li>
+            <li><button onclick="showLegal('privacy')" class="hover:text-slate-300 transition">Privacy Policy</button></li>
+            <li><a href="mailto:info@adsgenius.it" class="hover:text-slate-300 transition">info@adsgenius.it</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-xs text-slate-600">© 2025 AdsGenius Italia · Tutti i diritti riservati</p>
+        <p class="text-xs text-slate-600 text-center">I contenuti sono generati da IA · Non costituiscono consulenza professionale · Acquisti non rimborsabili</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 pointer-events-none transition-all duration-300 z-[999]">
+    <div class="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-emerald-300 border border-emerald-500/30 bg-emerald-500/15 backdrop-blur-md shadow-lg">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      Testo copiato!
+    </div>
   </div>
 
-  <!-- TOAST -->
-  <div class="toast" id="toast">✓ Testo copiato!</div>
-
+  <!-- ═══════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════ -->
   <script>
-  /* ═══════════════════════════════════════════
-     CONSTANTS & CONFIG
-  ═══════════════════════════════════════════ */
-  const MAX_FREE = 3;
+  /* ─── CONFIG ─── */
+  const MAX_FREE   = 3;
   const MAX_ARCHIVE = 5;
-  const STRIPE_URL = 'https://buy.stripe.com/aFa7sN0nE4Y0ggSbNggYU05';
-  const LS_CREDITS = 'ag_credits_v1';
-  const LS_ARCHIVE = 'ag_archive_v1';
+  const LS_CREDITS = 'ag_credits_v2';
+  const LS_ARCHIVE = 'ag_archive_v2';
 
   const AIDA_META = [
-    { key: 'attenzione', label: 'A — Attenzione', desc: 'Il gancio che ferma lo scroll',  emoji: '⚡' },
-    { key: 'interesse',  label: 'I — Interesse',  desc: 'Costruisce curiosità e rilevanza', emoji: '🧠' },
-    { key: 'desiderio',  label: 'D — Desiderio',  desc: 'Accende il bisogno emotivo',       emoji: '🔥' },
-    { key: 'azione',     label: 'A — Azione',     desc: 'La call-to-action irresistibile',  emoji: '🎯' },
+    { key: 'attenzione', label: 'A — Attenzione', desc: 'Il gancio che ferma lo scroll',    emoji: '⚡', colors: 'border-blue-500/35 bg-blue-500/8',    labelColor: 'text-blue-400'   },
+    { key: 'interesse',  label: 'I — Interesse',  desc: 'Costruisce curiosità e rilevanza',  emoji: '🧠', colors: 'border-violet-500/35 bg-violet-500/8', labelColor: 'text-violet-400' },
+    { key: 'desiderio',  label: 'D — Desiderio',  desc: 'Accende il bisogno emotivo',        emoji: '🔥', colors: 'border-orange-500/35 bg-orange-500/8', labelColor: 'text-orange-400' },
+    { key: 'azione',     label: 'A — Azione',     desc: 'La call-to-action irresistibile',   emoji: '🎯', colors: 'border-emerald-500/35 bg-emerald-500/8',labelColor: 'text-emerald-400'},
   ];
 
-  /* ═══════════════════════════════════════════
-     PARTICLES INIT
-  ═══════════════════════════════════════════ */
-  (function initParticles(){
-    const c = document.getElementById('particles');
-    for(let i=0;i<16;i++){
-      const p = document.createElement('span');
-      p.className='particle';
-      p.style.cssText=`left:${i*6.4+1}%;animation-duration:${8+i*1.1}s;animation-delay:${i*0.55}s`;
-      c.appendChild(p);
-    }
-  })();
+  /* ─── MOBILE MENU ─── */
+  const btnMenu   = document.getElementById('btn-menu');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconOpen  = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
 
-  /* ═══════════════════════════════════════════
-     CREDITS SYSTEM
-  ═══════════════════════════════════════════ */
-  function getCredits(){ return parseInt(localStorage.getItem(LS_CREDITS) ?? MAX_FREE, 10); }
-  function setCredits(n){ localStorage.setItem(LS_CREDITS, n); }
-  function useCredit(){
+  btnMenu.addEventListener('click', () => {
+    const isHidden = mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden', !isHidden);
+    iconOpen.classList.toggle('hidden', isHidden);
+    iconClose.classList.toggle('hidden', !isHidden);
+  });
+
+  function closeMobileMenu() {
+    mobileMenu.classList.add('hidden');
+    iconOpen.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+  }
+
+  /* ─── CREDITS ─── */
+  function getCredits() { return parseInt(localStorage.getItem(LS_CREDITS) ?? MAX_FREE, 10); }
+  function setCredits(n) { localStorage.setItem(LS_CREDITS, n); }
+  function useCredit() {
     const c = getCredits();
-    if(c <= 0) return false;
+    if (c <= 0) return false;
     setCredits(c - 1);
     return true;
   }
 
-  function refreshCreditsPill(){
-    const pill   = document.getElementById('credits-pill');
-    const label  = document.getElementById('credits-text');
-    const n      = getCredits();
-    pill.className = 'credits-pill';
-    if(n === 0){
-      pill.classList.add('empty');
+  function refreshPill() {
+    const pill  = document.getElementById('credits-pill');
+    const label = document.getElementById('credits-text');
+    const n = getCredits();
+    pill.className = 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border ';
+    if (n === 0) {
+      pill.className += 'text-red-400 border-red-500/30 bg-red-500/8';
       label.textContent = '0 crediti rimasti';
-    } else if(n === 1){
-      pill.classList.add('warn');
+    } else if (n === 1) {
+      pill.className += 'text-amber-400 border-amber-500/30 bg-amber-500/8';
       label.textContent = '1 prova rimasta';
     } else {
+      pill.className += 'text-brand-400 border-brand-500/30 bg-brand-500/8';
       label.textContent = `${n} prove gratuite`;
     }
   }
 
-  /* ═══════════════════════════════════════════
-     ARCHIVE SYSTEM
-  ═══════════════════════════════════════════ */
-  function getArchive(){ try{ return JSON.parse(localStorage.getItem(LS_ARCHIVE) || '[]'); }catch{ return []; } }
-  function saveToArchive(product, aida){
-    const archive = getArchive();
-    archive.unshift({ product, aida, ts: Date.now() });
-    if(archive.length > MAX_ARCHIVE) archive.pop();
-    localStorage.setItem(LS_ARCHIVE, JSON.stringify(archive));
+  /* ─── PARSE AIDA ─── */
+  function parseAIDA(raw) {
+    const tags   = ['ATTENZIONE','INTERESSE','DESIDERIO','AZIONE'];
+    const result = {};
+    tags.forEach((tag, i) => {
+      const marker = `[${tag}]`;
+      const start  = raw.indexOf(marker);
+      if (start === -1) { result[tag.toLowerCase()] = ''; return; }
+      const textStart = start + marker.length;
+      const nextIdxs  = tags.slice(i + 1)
+        .map(t => raw.indexOf(`[${t}]`, textStart))
+        .filter(x => x > -1);
+      const end = nextIdxs.length ? Math.min(...nextIdxs) : raw.length;
+      result[tag.toLowerCase()] = raw.slice(textStart, end).trim();
+    });
+    return result;
   }
-  function clearArchive(){ localStorage.removeItem(LS_ARCHIVE); }
 
-  function formatDate(ts){
-    const d = new Date(ts);
-    return d.toLocaleDateString('it-IT',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  /* ─── RENDER RESULTS ─── */
+  function renderResults(aida) {
+    const grid = document.getElementById('results-grid');
+    grid.innerHTML = '';
+    AIDA_META.forEach((m, idx) => {
+      const text = aida[m.key] || '';
+      const card = document.createElement('div');
+      card.className = `aida-card glass rounded-2xl p-5 border ${m.colors} opacity-0 translate-y-4 transition-all duration-500`;
+      card.style.transitionDelay = `${idx * 80}ms`;
+      card.innerHTML = `
+        <div class="flex items-start gap-3 mb-3">
+          <span class="text-2xl">${m.emoji}</span>
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-sm font-bold ${m.labelColor}">${m.label}</div>
+            <div class="text-xs text-slate-500 mt-0.5">${m.desc}</div>
+          </div>
+          <button onclick="copyText(this, ${JSON.stringify(text)})"
+            class="flex-shrink-0 flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-200 border border-white/10 hover:border-white/20 px-2.5 py-1.5 rounded-lg transition">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copia
+          </button>
+        </div>
+        <p class="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap">${escHtml(text)}</p>
+      `;
+      grid.appendChild(card);
+    });
+    document.getElementById('results').classList.remove('hidden');
+    // Trigger animation
+    requestAnimationFrame(() => {
+      grid.querySelectorAll('.aida-card').forEach(c => {
+        c.classList.remove('opacity-0','translate-y-4');
+        c.classList.add('opacity-100','translate-y-0');
+      });
+    });
   }
 
-  function renderArchive(){
-    const items = getArchive();
-    const section = document.getElementById('archive-section');
+  /* ─── ARCHIVE ─── */
+  function getArchive()  { try { return JSON.parse(localStorage.getItem(LS_ARCHIVE) || '[]'); } catch { return []; } }
+  function saveArchive(product, aida) {
+    const arr = getArchive();
+    arr.unshift({ product, aida, ts: Date.now() });
+    if (arr.length > MAX_ARCHIVE) arr.pop();
+    localStorage.setItem(LS_ARCHIVE, JSON.stringify(arr));
+  }
+
+  function renderArchive() {
+    const items   = getArchive();
+    const section = document.getElementById('archivio-section');
     const list    = document.getElementById('archive-list');
-    if(!items.length){ section.classList.add('hidden'); return; }
+    if (!items.length) { section.classList.add('hidden'); return; }
     section.classList.remove('hidden');
     list.innerHTML = '';
     items.forEach((entry, idx) => {
-      const el = document.createElement('div');
-      el.className = 'archive-item';
-      const keysHtml = AIDA_META.map(m => `
-        <div class="archive-mini-card">
-          <div class="archive-mini-label">${m.emoji} ${m.label}</div>
-          <div class="archive-mini-text">${escapeHtml(entry.aida[m.key] || '')}</div>
-          <div class="archive-mini-actions">
-            <button class="btn-copy-mini" onclick="copyText(this,'${escapeAttr(entry.aida[m.key]||'')}')">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copia
-            </button>
-          </div>
-        </div>
-      `).join('');
-
+      const d   = new Date(entry.ts);
+      const ts  = d.toLocaleDateString('it-IT',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+      const el  = document.createElement('div');
+      el.className = 'glass rounded-xl overflow-hidden';
       el.innerHTML = `
-        <div class="archive-item-head" onclick="toggleArchiveItem(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--blue-400);flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-          <div class="archive-product">${escapeHtml(entry.product)}</div>
-          <div class="archive-date">${formatDate(entry.ts)}</div>
-          <div class="archive-expand" id="expand-${idx}">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-        </div>
-        <div class="archive-content" id="content-${idx}">
-          <div class="archive-mini-grid">${keysHtml}</div>
+        <button onclick="toggleArchive(this)" class="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/[0.03] transition">
+          <svg class="w-4 h-4 text-brand-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          <span class="flex-1 text-sm font-medium truncate">${escHtml(entry.product)}</span>
+          <span class="text-xs text-slate-600 flex-shrink-0">${ts}</span>
+          <svg class="w-4 h-4 text-slate-600 flex-shrink-0 chevron transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="archive-body hidden border-t border-white/[0.06] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          ${AIDA_META.map(m => `
+            <div class="bg-white/[0.03] rounded-xl p-3 border border-white/[0.06]">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold ${m.labelColor} uppercase tracking-wider">${m.emoji} ${m.key}</span>
+                <button onclick="copyText(this,${JSON.stringify(entry.aida[m.key]||'')})" class="text-xs text-slate-600 hover:text-slate-300 transition">Copia</button>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed line-clamp-3">${escHtml(entry.aida[m.key]||'')}</p>
+            </div>
+          `).join('')}
         </div>
       `;
       list.appendChild(el);
     });
   }
 
-  function toggleArchiveItem(head){
-    const parent = head.parentElement;
-    const expand = head.querySelector('.archive-expand');
-    const content = parent.querySelector('.archive-content');
-    content.classList.toggle('open');
-    expand.classList.toggle('open');
+  function toggleArchive(btn) {
+    const body    = btn.nextElementSibling;
+    const chevron = btn.querySelector('.chevron');
+    body.classList.toggle('hidden');
+    chevron.style.transform = body.classList.contains('hidden') ? '' : 'rotate(180deg)';
   }
 
-  /* ═══════════════════════════════════════════
-     COPY UTIL
-  ═══════════════════════════════════════════ */
-  function copyText(btn, text){
-    navigator.clipboard.writeText(text).then(()=>{
-      const orig = btn.innerHTML;
-      btn.classList.add('copied');
-      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copiato`;
+  /* ─── COPY ─── */
+  function copyText(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent.trim();
+      btn.textContent = '✓ Copiato';
+      btn.classList.add('text-emerald-400');
       showToast();
-      setTimeout(()=>{ btn.innerHTML=orig; btn.classList.remove('copied'); }, 2000);
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('text-emerald-400'); }, 2000);
     });
   }
 
-  let toastTimer;
-  function showToast(){
+  let toastT;
+  function showToast() {
     const t = document.getElementById('toast');
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(()=> t.classList.remove('show'), 2000);
+    t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toastT);
+    toastT = setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(16px)'; }, 2200);
   }
 
-  /* ═══════════════════════════════════════════
-     HTML HELPERS
-  ═══════════════════════════════════════════ */
-  function escapeHtml(s){ const d=document.createElement('div');d.textContent=s;return d.innerHTML; }
-  function escapeAttr(s){ return s.replace(/'/g,"&#39;").replace(/"/g,"&quot;"); }
+  /* ─── HELPERS ─── */
+  function escHtml(s) { const d=document.createElement('div');d.textContent=s;return d.innerHTML; }
+  function show(id)   { document.getElementById(id).classList.remove('hidden'); }
+  function hide(id)   { document.getElementById(id).classList.add('hidden'); }
 
-  /* ═══════════════════════════════════════════
-     PARSE AIDA FROM TAGGED TEXT
-  ═══════════════════════════════════════════ */
-  function parseAIDA(raw){
-    const tags=['ATTENZIONE','INTERESSE','DESIDERIO','AZIONE'];
-    const result={};
-    tags.forEach((tag,i)=>{
-      const start = raw.indexOf(`[${tag}]`);
-      if(start === -1){ result[tag.toLowerCase()]=''; return; }
-      const contentStart = start + tag.length + 2;
-      const nextTag = tags.slice(i+1).map(t=>`[${t}]`).map(t=>raw.indexOf(t,contentStart)).filter(x=>x>-1);
-      const end = nextTag.length ? Math.min(...nextTag) : raw.length;
-      result[tag.toLowerCase()] = raw.slice(contentStart, end).trim();
-    });
-    return result;
-  }
-
-  /* ═══════════════════════════════════════════
-     RENDER RESULTS
-  ═══════════════════════════════════════════ */
-  function renderResults(aida){
-    const grid = document.getElementById('results-grid');
-    grid.innerHTML = '';
-    AIDA_META.forEach(m => {
-      const text = aida[m.key] || '';
-      const card = document.createElement('div');
-      card.className = 'glass aida-card';
-      card.innerHTML = `
-        <div class="card-head">
-          <div class="card-emoji">${m.emoji}</div>
-          <div class="card-meta">
-            <div class="card-label">${m.label}</div>
-            <div class="card-desc">${m.desc}</div>
-          </div>
-          <button class="btn-copy" onclick="copyText(this,${JSON.stringify(text)})">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copia
-          </button>
-        </div>
-        <p class="card-body-text">${escapeHtml(text)}</p>
-      `;
-      grid.appendChild(card);
-    });
-    grid.classList.remove('hidden');
-    setTimeout(()=> grid.querySelectorAll('.aida-card').forEach(c=>c.classList.add('visible')), 60);
-    document.getElementById('reset-area').classList.remove('hidden');
-  }
-
-  /* ═══════════════════════════════════════════
-     SHOW / HIDE UI STATE
-  ═══════════════════════════════════════════ */
-  function showSkeleton(){ document.getElementById('skeleton').classList.remove('hidden'); }
-  function hideSkeleton(){ document.getElementById('skeleton').classList.add('hidden'); }
-  function showError(msg){
-    const b = document.getElementById('error-banner');
-    document.getElementById('error-text').textContent = msg;
-    b.classList.remove('hidden');
-  }
-  function hideError(){ document.getElementById('error-banner').classList.add('hidden'); }
-  function showPaywall(){ document.getElementById('paywall').classList.remove('hidden'); }
-
-  function resetUI(){
-    document.getElementById('results-grid').classList.add('hidden');
-    document.getElementById('results-grid').innerHTML='';
-    document.getElementById('reset-area').classList.add('hidden');
-    hideError();
-    hideSkeleton();
-    document.getElementById('paywall').classList.add('hidden');
-  }
-
-  /* ═══════════════════════════════════════════
-     GENERATE HANDLER
-  ═══════════════════════════════════════════ */
-  async function generate(){
+  /* ─── GENERATE ─── */
+  async function generate() {
     const product = document.getElementById('product-input').value.trim();
-    if(!product) return;
+    if (!product) return;
 
-    hideError();
+    hide('error-banner');
+    hide('results');
+    hide('paywall');
 
-    // Credits check
-    if(!useCredit()){
-      showPaywall();
-      refreshCreditsPill();
-      return;
-    }
-    refreshCreditsPill();
+    if (!useCredit()) { show('paywall'); refreshPill(); return; }
+    refreshPill();
 
-    document.getElementById('btn-generate').disabled = true;
-    document.getElementById('btn-generate').classList.add('loading');
-    document.getElementById('btn-generate').innerHTML = `<div class="spinner"></div> Genero Magia…`;
+    const btn   = document.getElementById('btn-generate');
+    const label = document.getElementById('btn-text');
+    btn.disabled = true;
+    label.textContent = 'Genero...';
 
-    resetUI();
-    showSkeleton();
+    show('skeleton');
 
     try {
       const res = await fetch('/.netlify/functions/generate', {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ product })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product }),
       });
 
-      if(!res.ok){
-        const err = await res.json().catch(()=>({}));
-        throw new Error(err.error || `Errore server ${res.status}`);
-      }
-
       const data = await res.json();
-      const raw  = data.text || '';
-      const aida = parseAIDA(raw);
+      hide('skeleton');
 
-      hideSkeleton();
+      if (!res.ok) throw new Error(data.error || `Errore ${res.status}`);
+
+      const aida = parseAIDA(data.text || '');
       renderResults(aida);
-      saveToArchive(product, aida);
+      saveArchive(product, aida);
       renderArchive();
 
-    } catch(err){
-      hideSkeleton();
-      showError(err.message || 'Errore di connessione. Riprova tra poco.');
-      // Restituzione del credito in caso di errore di rete
+    } catch (err) {
+      hide('skeleton');
       setCredits(getCredits() + 1);
-      refreshCreditsPill();
+      refreshPill();
+      document.getElementById('error-text').textContent = err.message || 'Errore di connessione. Riprova.';
+      show('error-banner');
     } finally {
-      const btn = document.getElementById('btn-generate');
       btn.disabled = false;
-      btn.classList.remove('loading');
-      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Genera Magia`;
+      label.textContent = 'Genera Magia';
     }
   }
 
-  /* ═══════════════════════════════════════════
-     LEGAL MODAL (inline)
-  ═══════════════════════════════════════════ */
-  function showLegal(type){
-    const content = type==='termini' ? `
-      <h2 style="font-family:var(--ff-display);font-size:1.3rem;font-weight:700;margin-bottom:1rem">Termini di Servizio</h2>
-      <p><strong>1. Natura del Servizio</strong><br>AdsGenius Italia è uno strumento di assistenza alla creazione di testi pubblicitari tramite intelligenza artificiale generativa (Google Gemini). I contenuti prodotti sono suggerimenti automatici e non costituiscono consulenza professionale.</p>
-      <br><p><strong>2. Contenuti Generati da IA</strong><br>I testi prodotti sono generati automaticamente. AdsGenius Italia non garantisce l'accuratezza, originalità o idoneità commerciale di tali contenuti. L'utente è l'unico responsabile dell'uso che ne fa.</p>
-      <br><p><strong>3. Nessun Rimborso</strong><br>I crediti o abbonamenti acquistati sono non rimborsabili, in quanto il servizio viene erogato immediatamente all'atto della generazione del contenuto.</p>
-      <br><p><strong>4. Limitazione di Responsabilità</strong><br>AdsGenius Italia non sarà responsabile per perdite dirette o indirette derivanti dall'utilizzo dei contenuti generati.</p>
+  /* ─── LEGAL MODAL ─── */
+  function showLegal(type) {
+    const content = type === 'termini' ? `
+      <h2 class="font-display text-xl font-bold mb-4">Termini di Servizio</h2>
+      <div class="space-y-4 text-sm text-slate-400 leading-relaxed">
+        <p><strong class="text-slate-200">1. Natura del Servizio.</strong> AdsGenius Italia è uno strumento di assistenza alla creazione di testi pubblicitari tramite intelligenza artificiale generativa. I contenuti prodotti sono suggerimenti automatici e non costituiscono consulenza professionale di marketing.</p>
+        <p><strong class="text-slate-200">2. Contenuti generati da IA.</strong> I testi sono generati automaticamente da un modello AI. AdsGenius Italia non garantisce l'accuratezza, l'originalità o l'idoneità commerciale di tali contenuti. L'utente è l'unico responsabile dell'uso che ne fa.</p>
+        <p><strong class="text-slate-200">3. Nessun rimborso.</strong> I crediti o abbonamenti acquistati sono non rimborsabili, in quanto il servizio viene erogato immediatamente all'atto della generazione.</p>
+        <p><strong class="text-slate-200">4. Limitazione di responsabilità.</strong> AdsGenius Italia non sarà responsabile per perdite dirette o indirette derivanti dall'utilizzo dei contenuti generati.</p>
+      </div>
     ` : `
-      <h2 style="font-family:var(--ff-display);font-size:1.3rem;font-weight:700;margin-bottom:1rem">Privacy Policy</h2>
-      <p><strong>Titolare del trattamento:</strong> AdsGenius Italia — privacy@adsgenius.it</p>
-      <br><p><strong>Dati raccolti:</strong> Raccogliamo esclusivamente i testi inseriti dall'utente nel campo di input ai fini dell'elaborazione della richiesta via API. Non raccogliamo dati personali identificativi senza consenso esplicito.</p>
-      <br><p><strong>Conservazione:</strong> I testi inviati non vengono conservati sui nostri server oltre il tempo necessario all'elaborazione della singola richiesta. I dati in localStorage restano sul tuo dispositivo e possono essere cancellati in qualsiasi momento.</p>
-      <br><p><strong>Base giuridica:</strong> Art. 6.1.b GDPR — esecuzione di un contratto.</p>
-      <br><p><strong>I tuoi diritti:</strong> Hai diritto di accesso, rettifica, cancellazione, portabilità e opposizione. Contattaci a privacy@adsgenius.it</p>
-    `;
-
-    const overlay = document.createElement('div');
-    overlay.style.cssText=`position:fixed;inset:0;background:rgba(5,8,16,.85);backdrop-filter:blur(8px);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.25rem;animation:fade-up .2s ease`;
-    overlay.innerHTML=`
-      <div style="background:var(--glass-bg);backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--r-xl);max-width:560px;width:100%;max-height:80dvh;display:flex;flex-direction:column;">
-        <div style="padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:flex-end">
-          <button onclick="this.closest('div[style]').remove()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:var(--white-70);padding:.3rem .65rem;font-size:.9rem">✕</button>
-        </div>
-        <div style="overflow-y:auto;padding:1.5rem;font-size:.88rem;color:var(--white-70);line-height:1.65">${content}</div>
+      <h2 class="font-display text-xl font-bold mb-4">Privacy Policy</h2>
+      <div class="space-y-4 text-sm text-slate-400 leading-relaxed">
+        <p><strong class="text-slate-200">Titolare del trattamento:</strong> AdsGenius Italia — privacy@adsgenius.it</p>
+        <p><strong class="text-slate-200">Dati raccolti:</strong> Raccogliamo esclusivamente i testi inseriti nel campo di input per elaborare la richiesta via API. Non raccogliamo dati personali identificativi.</p>
+        <p><strong class="text-slate-200">Conservazione:</strong> I testi inviati non vengono conservati sui server oltre il tempo necessario all'elaborazione. I dati in localStorage restano sul tuo dispositivo.</p>
+        <p><strong class="text-slate-200">Base giuridica:</strong> Art. 6.1.b GDPR — esecuzione di un contratto.</p>
+        <p><strong class="text-slate-200">I tuoi diritti:</strong> Hai diritto di accesso, rettifica, cancellazione e portabilità. Contatta: privacy@adsgenius.it</p>
       </div>
     `;
-    overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+    const overlay = document.createElement('div');
+    overlay.className = 'fixed inset-0 z-[500] flex items-center justify-center p-4';
+    overlay.style.background = 'rgba(5,8,16,0.88)';
+    overlay.style.backdropFilter = 'blur(10px)';
+    overlay.innerHTML = `
+      <div class="glass rounded-2xl max-w-lg w-full max-h-[80dvh] flex flex-col animate-fade-up">
+        <div class="flex justify-end p-4 border-b border-white/[0.06]">
+          <button onclick="this.closest('.fixed').remove()" class="text-slate-500 hover:text-white text-sm border border-white/10 hover:border-white/20 px-3 py-1.5 rounded-lg transition">✕ Chiudi</button>
+        </div>
+        <div class="overflow-y-auto p-6">${content}</div>
+      </div>
+    `;
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
     document.body.appendChild(overlay);
   }
 
-  /* ═══════════════════════════════════════════
-     EVENT LISTENERS
-  ═══════════════════════════════════════════ */
+  /* ─── EVENTS ─── */
   document.getElementById('btn-generate').addEventListener('click', generate);
-
-  document.getElementById('product-input').addEventListener('input', function(){
+  document.getElementById('product-input').addEventListener('input', function() {
     document.getElementById('char-count').textContent = this.value.length;
   });
-
-  document.getElementById('product-input').addEventListener('keydown', function(e){
-    if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); generate(); }
+  document.getElementById('product-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); generate(); }
   });
-
-  document.getElementById('btn-reset').addEventListener('click', ()=>{
-    resetUI();
-    document.getElementById('product-input').value='';
-    document.getElementById('char-count').textContent='0';
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    hide('results'); hide('error-banner');
+    document.getElementById('product-input').value = '';
+    document.getElementById('char-count').textContent = '0';
   });
-
-  document.getElementById('btn-clear-archive').addEventListener('click', ()=>{
-    if(confirm('Cancellare tutti i testi salvati?')){
-      clearArchive(); renderArchive();
+  document.getElementById('btn-clear').addEventListener('click', () => {
+    if (confirm('Cancellare tutti i testi salvati?')) {
+      localStorage.removeItem(LS_ARCHIVE);
+      renderArchive();
     }
   });
 
-  /* ═══════════════════════════════════════════
-     INIT
-  ═══════════════════════════════════════════ */
-  refreshCreditsPill();
+  /* ─── INIT ─── */
+  refreshPill();
   renderArchive();
-  // Se crediti esauriti, mostra paywall direttamente
-  if(getCredits() <= 0) showPaywall();
+  if (getCredits() <= 0) show('paywall');
   </script>
 </body>
 </html>
