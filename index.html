@@ -1,66 +1,968 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdsGenius Italia - Copywriter AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AdsGenius Italia — Copy AIDA professionale generato da AI in 5 secondi." />
+  <title>AdsGenius Italia ✦ Copy AI che Vende</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════ */
+    :root {
+      --black:      #050810;
+      --deep:       #080d1c;
+      --slate-900:  #0d1528;
+      --slate-800:  #162040;
+      --slate-700:  #1e2d55;
+      --blue-700:   #1d4ed8;
+      --blue-600:   #2563eb;
+      --blue-500:   #3b82f6;
+      --blue-400:   #60a5fa;
+      --cyan-400:   #22d3ee;
+      --emerald:    #10b981;
+      --amber:      #f59e0b;
+      --rose:       #f43f5e;
+      --violet:     #8b5cf6;
+      --white:      #eef2ff;
+      --white-70:   rgba(238,242,255,.70);
+      --white-35:   rgba(238,242,255,.35);
+      --white-12:   rgba(238,242,255,.12);
+      --white-06:   rgba(238,242,255,.06);
+
+      --glass-bg:     rgba(13,21,40,.65);
+      --glass-border: rgba(96,165,250,.18);
+
+      --ff-display: 'Syne', sans-serif;
+      --ff-body:    'DM Sans', sans-serif;
+
+      --r-sm:  12px;
+      --r-md:  18px;
+      --r-lg:  24px;
+      --r-xl:  32px;
+      --r-2xl: 44px;
+
+      --shadow-sm:   0 2px 12px rgba(0,0,20,.4);
+      --shadow-md:   0 8px 36px rgba(0,0,20,.55);
+      --shadow-blue: 0 6px 28px rgba(59,130,246,.35);
+    }
+
+    /* ═══════════════════════════════════════════
+       RESET + BASE
+    ═══════════════════════════════════════════ */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{
+      background:var(--black);
+      color:var(--white);
+      font-family:var(--ff-body);
+      font-size:16px;
+      line-height:1.65;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      min-height:100dvh;
+    }
+    button{cursor:pointer;font-family:var(--ff-body);border:none;background:none}
+    a{color:inherit;text-decoration:none}
+    textarea,input{font-family:var(--ff-body)}
+
+    /* ═══════════════════════════════════════════
+       AMBIENT BACKGROUND
+    ═══════════════════════════════════════════ */
+    .ambient{
+      position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+    }
+    .orb{
+      position:absolute;border-radius:50%;filter:blur(120px);
+      animation:pulse-orb 9s ease-in-out infinite alternate;
+    }
+    .orb-1{
+      width:70vw;height:70vw;max-width:700px;max-height:700px;
+      background:radial-gradient(circle,rgba(37,99,235,.18) 0%,transparent 70%);
+      top:-20%;left:-20%;
+    }
+    .orb-2{
+      width:50vw;height:50vw;max-width:500px;max-height:500px;
+      background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 70%);
+      bottom:-15%;right:-15%;
+      animation-delay:-4s;animation-direction:alternate-reverse;
+    }
+    @keyframes pulse-orb{
+      from{transform:scale(1) translate(0,0)}
+      to{transform:scale(1.12) translate(20px,-15px)}
+    }
+
+    /* Floating particles */
+    .particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+    .particle{
+      position:absolute;width:2px;height:2px;border-radius:50%;
+      background:var(--blue-400);box-shadow:0 0 6px var(--blue-400);
+      opacity:0;bottom:-5px;
+      animation:float-up linear infinite;
+    }
+    @keyframes float-up{
+      0%{opacity:0;transform:translateY(0) scale(.5)}
+      10%{opacity:.7}90%{opacity:.15}
+      100%{opacity:0;transform:translateY(-100vh) scale(1.4)}
+    }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT WRAPPER
+    ═══════════════════════════════════════════ */
+    #app{
+      position:relative;z-index:1;
+      min-height:100dvh;
+      display:flex;flex-direction:column;
+      background:
+        radial-gradient(ellipse 80% 45% at 15% 0%,rgba(37,99,235,.10) 0%,transparent 60%),
+        radial-gradient(ellipse 55% 35% at 85% 100%,rgba(139,92,246,.08) 0%,transparent 55%),
+        var(--deep);
+    }
+
+    /* ═══════════════════════════════════════════
+       GLASS UTILITY
+    ═══════════════════════════════════════════ */
+    .glass{
+      background:var(--glass-bg);
+      backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+      border:1px solid var(--glass-border);
+      border-radius:var(--r-xl);
+      box-shadow:var(--shadow-md);
+    }
+
+    /* ═══════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════ */
+    .navbar{
+      position:sticky;top:0;z-index:100;
+      background:rgba(5,8,16,.8);
+      backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      border-bottom:1px solid rgba(96,165,250,.10);
+    }
+    .nav-inner{
+      max-width:960px;margin:0 auto;
+      padding:.85rem 1.25rem;
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    }
+    .logo{display:flex;align-items:center;gap:.5rem}
+    .logo-icon{color:var(--blue-400);animation:spin 10s linear infinite;display:flex}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .logo-text{
+      font-family:var(--ff-display);font-size:1.2rem;font-weight:800;
+      letter-spacing:-.025em;color:var(--white);
+    }
+    .logo-text span{color:var(--blue-400)}
+    .logo-sub{font-size:.7rem;font-weight:400;color:var(--white-35);vertical-align:middle;margin-left:2px}
+
+    /* Credits pill */
+    .credits-pill{
+      display:flex;align-items:center;gap:.45rem;
+      background:rgba(96,165,250,.08);
+      border:1px solid rgba(96,165,250,.22);
+      border-radius:999px;padding:.35rem .9rem;
+      font-size:.82rem;font-weight:500;
+      color:var(--blue-400);white-space:nowrap;
+    }
+    .credits-pill.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:var(--amber)}
+    .credits-pill.empty{background:rgba(244,63,94,.08);border-color:rgba(244,63,94,.25);color:var(--rose)}
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero{
+      padding:3.5rem 1.25rem 2.5rem;
+      text-align:center;
+    }
+    .hero-eyebrow{
+      display:inline-flex;align-items:center;gap:.45rem;
+      font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+      color:var(--blue-400);
+      background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);
+      border-radius:999px;padding:.38rem 1rem;margin-bottom:1.4rem;
+      animation:fade-up .7s ease both;
+    }
+    .hero-title{
+      font-family:var(--ff-display);
+      font-size:clamp(2rem,6vw,3.8rem);
+      font-weight:800;line-height:1.08;letter-spacing:-.035em;
+      color:var(--white);margin-bottom:1rem;
+      animation:fade-up .7s ease .12s both;
+    }
+    .hero-title .grad{
+      background:linear-gradient(120deg,var(--blue-400) 0%,var(--cyan-400) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .hero-sub{
+      font-size:1.05rem;color:var(--white-70);max-width:540px;margin:0 auto 2rem;
+      animation:fade-up .7s ease .24s both;
+    }
+
+    /* ═══════════════════════════════════════════
+       MAIN AREA
+    ═══════════════════════════════════════════ */
+    .main{
+      max-width:840px;margin:0 auto;
+      padding:0 1.25rem 4rem;
+      flex:1;
+      display:flex;flex-direction:column;gap:1.5rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       INPUT CARD
+    ═══════════════════════════════════════════ */
+    .input-card{padding:1.5rem}
+    .input-label{
+      display:block;font-size:.8rem;font-weight:600;letter-spacing:.05em;
+      text-transform:uppercase;color:var(--blue-400);margin-bottom:.75rem;
+    }
+    .product-textarea{
+      width:100%;background:rgba(255,255,255,.04);
+      border:1px solid rgba(96,165,250,.2);border-radius:var(--r-md);
+      color:var(--white);font-size:.97rem;line-height:1.6;
+      padding:1rem 1.1rem;resize:none;outline:none;
+      transition:border-color .2s,box-shadow .2s;
+      caret-color:var(--blue-400);
+    }
+    .product-textarea::placeholder{color:var(--white-35)}
+    .product-textarea:focus{
+      border-color:rgba(96,165,250,.5);
+      box-shadow:0 0 0 3px rgba(59,130,246,.12);
+    }
+    .input-footer{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:.75rem;margin-top:1rem;flex-wrap:wrap;
+    }
+    .char-count{font-size:.78rem;color:var(--white-35)}
+
+    /* Generate button */
+    .btn-generate{
+      display:flex;align-items:center;gap:.55rem;
+      font-family:var(--ff-display);font-size:1rem;font-weight:700;
+      color:#fff;
+      background:linear-gradient(135deg,var(--blue-700) 0%,var(--blue-500) 100%);
+      border-radius:999px;padding:.75rem 2rem;
+      transition:transform .2s,box-shadow .2s,opacity .2s;
+      box-shadow:var(--shadow-blue);
+      white-space:nowrap;
+    }
+    .btn-generate:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 32px rgba(59,130,246,.5)}
+    .btn-generate:disabled{opacity:.45;transform:none;cursor:not-allowed}
+    .btn-generate.loading{background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%)}
+
+    /* Spinner */
+    .spinner{
+      width:16px;height:16px;flex-shrink:0;
+      border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
+      border-radius:50%;animation:spin .7s linear infinite;
+    }
+
+    /* ═══════════════════════════════════════════
+       AIDA CARDS
+    ═══════════════════════════════════════════ */
+    .results-grid{
+      display:grid;grid-template-columns:1fr 1fr;
+      gap:1rem;
+      animation:fade-up .5s ease both;
+    }
+    @media(max-width:580px){.results-grid{grid-template-columns:1fr}}
+
+    .aida-card{
+      padding:1.35rem;
+      border-radius:var(--r-lg);
+      transition:transform .25s,box-shadow .25s,opacity .5s,translate .5s;
+      opacity:0;translate:0 18px;will-change:opacity,translate;
+    }
+    .aida-card.visible{opacity:1!important;translate:0 0!important}
+    .aida-card:nth-child(1){transition-delay:.05s;--glow:#3b82f6;--c1:rgba(59,130,246,.18);--c2:rgba(34,211,238,.08);border-color:rgba(59,130,246,.35)!important}
+    .aida-card:nth-child(2){transition-delay:.14s;--glow:#8b5cf6;--c1:rgba(139,92,246,.18);--c2:rgba(99,102,241,.08);border-color:rgba(139,92,246,.35)!important}
+    .aida-card:nth-child(3){transition-delay:.23s;--glow:#f97316;--c1:rgba(249,115,22,.18);--c2:rgba(245,158,11,.08);border-color:rgba(249,115,22,.35)!important}
+    .aida-card:nth-child(4){transition-delay:.32s;--glow:#10b981;--c1:rgba(16,185,129,.18);--c2:rgba(20,184,166,.08);border-color:rgba(16,185,129,.35)!important}
+    .aida-card{background:linear-gradient(135deg,var(--c1) 0%,var(--c2) 100%)}
+    .aida-card:hover{transform:translateY(-3px);box-shadow:0 0 32px color-mix(in srgb,var(--glow) 22%,transparent)}
+
+    .card-head{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1rem}
+    .card-emoji{font-size:1.5rem;flex-shrink:0;filter:drop-shadow(0 0 8px var(--glow))}
+    .card-meta{flex:1;min-width:0}
+    .card-label{font-family:var(--ff-display);font-size:.95rem;font-weight:700;letter-spacing:-.01em}
+    .card-desc{font-size:.75rem;color:var(--white-35);margin-top:1px}
+    .btn-copy{
+      flex-shrink:0;
+      background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+      border-radius:8px;color:var(--white-70);
+      font-size:.8rem;padding:.3rem .6rem;
+      display:flex;align-items:center;gap:.3rem;
+      transition:background .2s,color .2s;
+    }
+    .btn-copy:hover{background:rgba(255,255,255,.13);color:var(--white)}
+    .btn-copy.copied{color:var(--emerald);border-color:rgba(16,185,129,.4)}
+
+    .card-body-text{
+      font-size:.92rem;line-height:1.68;color:var(--white-70);
+      white-space:pre-wrap;word-break:break-word;
+    }
+
+    /* ── Skeleton shimmer ── */
+    .skeleton-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+    }
+    @media(max-width:580px){.skeleton-grid{grid-template-columns:1fr}}
+    .skeleton-card{
+      border-radius:var(--r-lg);padding:1.35rem;
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+      display:flex;flex-direction:column;gap:.7rem;
+    }
+    .skel{
+      height:12px;border-radius:6px;
+      background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.11) 50%,rgba(255,255,255,.06) 75%);
+      background-size:200% 100%;
+      animation:shimmer 1.6s ease infinite;
+    }
+    .skel.w-40{width:40%}.skel.w-70{width:70%}.skel.w-55{width:55%}
+    .skel.h-tall{height:68px;border-radius:8px}
+    @keyframes shimmer{
+      0%{background-position:200% 0}
+      100%{background-position:-200% 0}
+    }
+
+    /* ═══════════════════════════════════════════
+       ERROR BANNER
+    ═══════════════════════════════════════════ */
+    .error-banner{
+      background:rgba(244,63,94,.10);border:1px solid rgba(244,63,94,.28);
+      border-radius:var(--r-sm);padding:.9rem 1.1rem;
+      color:#fda4af;font-size:.88rem;display:flex;align-items:flex-start;gap:.6rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       PAYWALL CARD
+    ═══════════════════════════════════════════ */
+    .paywall-card{
+      padding:2rem 1.75rem;text-align:center;
+      border-color:rgba(245,158,11,.3)!important;
+      background:linear-gradient(135deg,rgba(245,158,11,.08) 0%,rgba(249,115,22,.05) 100%)!important;
+      animation:fade-up .5s ease both;
+    }
+    .paywall-icon{font-size:2.8rem;margin-bottom:1rem;filter:drop-shadow(0 0 16px rgba(245,158,11,.5))}
+    .paywall-title{
+      font-family:var(--ff-display);font-size:1.5rem;font-weight:800;
+      letter-spacing:-.02em;margin-bottom:.75rem;
+    }
+    .paywall-body{font-size:.97rem;color:var(--white-70);max-width:420px;margin:0 auto 1.6rem;line-height:1.65}
+    .paywall-price{
+      display:inline-block;font-family:var(--ff-display);font-size:.85rem;font-weight:700;
+      color:var(--amber);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);
+      border-radius:999px;padding:.3rem .9rem;margin-bottom:1.5rem;
+    }
+    .btn-upgrade{
+      display:inline-flex;align-items:center;gap:.6rem;
+      font-family:var(--ff-display);font-size:1.05rem;font-weight:700;color:#fff;
+      background:linear-gradient(135deg,#d97706 0%,#f59e0b 100%);
+      border-radius:999px;padding:.85rem 2.2rem;
+      box-shadow:0 6px 28px rgba(245,158,11,.4);
+      transition:transform .2s,box-shadow .2s;
+    }
+    .btn-upgrade:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(245,158,11,.55)}
+    .paywall-note{font-size:.75rem;color:var(--white-35);margin-top:.9rem}
+
+    /* ═══════════════════════════════════════════
+       ARCHIVE SECTION
+    ═══════════════════════════════════════════ */
+    .archive-section{animation:fade-up .6s ease .1s both}
+    .section-head{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:1rem;margin-bottom:1rem;
+    }
+    .section-title{
+      font-family:var(--ff-display);font-size:1.1rem;font-weight:700;
+      letter-spacing:-.01em;display:flex;align-items:center;gap:.5rem;
+    }
+    .section-title svg{color:var(--blue-400)}
+    .btn-clear-archive{
+      font-size:.76rem;color:var(--white-35);
+      background:none;border:1px solid rgba(255,255,255,.1);
+      border-radius:8px;padding:.28rem .65rem;
+      transition:color .2s,border-color .2s;
+    }
+    .btn-clear-archive:hover{color:var(--rose);border-color:rgba(244,63,94,.3)}
+
+    .archive-list{display:flex;flex-direction:column;gap:.75rem}
+    .archive-item{
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--r-md);overflow:hidden;
+      transition:border-color .2s;
+    }
+    .archive-item:hover{border-color:rgba(96,165,250,.22)}
+    .archive-item-head{
+      display:flex;align-items:center;gap:.75rem;
+      padding:.9rem 1.1rem;cursor:pointer;
+    }
+    .archive-product{
+      flex:1;min-width:0;font-size:.9rem;font-weight:500;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .archive-date{font-size:.72rem;color:var(--white-35);white-space:nowrap}
+    .archive-expand{color:var(--white-35);transition:transform .25s;flex-shrink:0;display:flex}
+    .archive-expand.open{transform:rotate(180deg)}
+
+    .archive-content{
+      display:none;padding:.75rem 1.1rem 1.1rem;border-top:1px solid rgba(255,255,255,.06);
+    }
+    .archive-content.open{display:block}
+    .archive-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    @media(max-width:480px){.archive-mini-grid{grid-template-columns:1fr}}
+
+    .archive-mini-card{
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+      border-radius:10px;padding:.75rem;
+    }
+    .archive-mini-label{
+      font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+      color:var(--blue-400);margin-bottom:.4rem;
+    }
+    .archive-mini-text{
+      font-size:.82rem;color:var(--white-70);line-height:1.55;
+      max-height:80px;overflow:hidden;position:relative;
+    }
+    .archive-mini-text::after{
+      content:'';position:absolute;bottom:0;left:0;right:0;height:24px;
+      background:linear-gradient(transparent,rgba(13,21,40,.9));
+    }
+    .archive-mini-actions{
+      display:flex;justify-content:flex-end;margin-top:.5rem;
+    }
+    .btn-copy-mini{
+      font-size:.74rem;padding:.22rem .55rem;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+      border-radius:6px;color:var(--white-35);
+      display:flex;align-items:center;gap:.3rem;
+      transition:background .2s,color .2s;
+    }
+    .btn-copy-mini:hover{background:rgba(255,255,255,.11);color:var(--white)}
+    .btn-copy-mini.copied{color:var(--emerald)}
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    .footer{
+      border-top:1px solid rgba(96,165,250,.08);
+      padding:2rem 1.25rem;text-align:center;
+      font-size:.78rem;color:var(--white-35);
+      display:flex;flex-direction:column;gap:.55rem;align-items:center;
+    }
+    .footer-logo{font-family:var(--ff-display);font-size:.95rem;font-weight:700;color:var(--white-70)}
+    .footer-logo span{color:var(--blue-400)}
+    .footer-note{max-width:480px;line-height:1.55}
+    .footer-links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+    .footer-links a{color:var(--blue-400);transition:color .2s}
+    .footer-links a:hover{color:var(--cyan-400)}
+
+    /* ═══════════════════════════════════════════
+       UTILITY ANIMATIONS
+    ═══════════════════════════════════════════ */
+    @keyframes fade-up{
+      from{opacity:0;transform:translateY(18px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .hidden{display:none!important}
+
+    /* ═══════════════════════════════════════════
+       TOAST
+    ═══════════════════════════════════════════ */
+    .toast{
+      position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);
+      background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);
+      backdrop-filter:blur(16px);border-radius:999px;
+      color:#6ee7b7;font-size:.85rem;font-weight:500;
+      padding:.55rem 1.3rem;z-index:999;
+      opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center p-6">
-    <h1 class="text-4xl font-bold mb-8 text-blue-400">AdsGenius Italia</h1>
-    
-    <div class="w-full max-w-2xl bg-slate-800 p-6 rounded-xl shadow-2xl">
-        <label class="block mb-2 text-lg">Cosa vuoi vendere oggi?</label>
-        <textarea id="productInput" class="w-full p-4 rounded bg-slate-700 border border-slate-600 focus:outline-none focus:border-blue-500 h-32" placeholder="Es: Crema solare bio per bambini..."></textarea>
-        
-        <button onclick="generateAds()" id="btn" class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition duration-200">
-            ⚡ Genera Magia
+
+<body>
+  <!-- Ambient BG -->
+  <div class="ambient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+  <div class="particles" id="particles"></div>
+
+  <!-- App Root -->
+  <div id="app">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="nav-inner">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="logo-text">Ads<span>Genius</span><span class="logo-sub"> Italia</span></div>
+        </div>
+        <div class="credits-pill" id="credits-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <span id="credits-text">3 prove gratuite</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-eyebrow">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        🇮🇹 Il Copywriter AI per il Mercato Italiano
+      </div>
+      <h1 class="hero-title">
+        Trasforma un'idea<br>in un annuncio <span class="grad">che vende.</span>
+      </h1>
+      <p class="hero-sub">Framework AIDA professionale. Generato in secondi. Pronto per Meta, Google e TikTok.</p>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- INPUT CARD -->
+      <div class="glass input-card">
+        <label class="input-label" for="product-input">
+          💡 Cosa vuoi vendere oggi?
+        </label>
+        <textarea
+          id="product-input"
+          class="product-textarea"
+          rows="4"
+          maxlength="800"
+          placeholder="Es: Scarpe da trekking impermeabili per donne attive, prezzzo €89. Resistenti, leggere, disponibili in 6 colori..."
+        ></textarea>
+        <div class="input-footer">
+          <span class="char-count"><span id="char-count">0</span>/800</span>
+          <button class="btn-generate" id="btn-generate">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Genera Magia
+          </button>
+        </div>
+      </div>
+
+      <!-- ERROR -->
+      <div class="error-banner hidden" id="error-banner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="error-text"></span>
+      </div>
+
+      <!-- SKELETON (loading) -->
+      <div class="skeleton-grid hidden" id="skeleton">
+        <div class="skeleton-card"><div class="skel w-40"></div><div class="skel h-tall"></div><div class="skel w-70"></div><div class="skel w-55"></div></div>
+        <div class="skeleton-card"><div class="skel w-40"></div><div class="skel h-tall"></div><div class="skel w-70"></div><div class="skel w-55"></div></div>
+        <div class="skeleton-card"><div class="skel w-40"></div><div class="skel h-tall"></div><div class="skel w-70"></div><div class="skel w-55"></div></div>
+        <div class="skeleton-card"><div class="skel w-40"></div><div class="skel h-tall"></div><div class="skel w-70"></div><div class="skel w-55"></div></div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="results-grid hidden" id="results-grid"></div>
+
+      <!-- RESET -->
+      <div class="hidden" id="reset-area" style="text-align:right">
+        <button id="btn-reset" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;color:var(--white-70);font-size:.88rem;padding:.5rem 1.3rem;transition:background .2s">
+          ↺ Nuova Generazione
         </button>
-        
-        <div id="loading" class="hidden mt-4 text-center animate-pulse text-blue-300">L'IA sta scrivendo per te...</div>
-        <div id="error" class="hidden mt-4 p-4 bg-red-900/50 border border-red-500 rounded text-red-200"></div>
-    </div>
+      </div>
 
-    <div id="results" class="w-full max-w-2xl mt-8 space-y-6"></div>
+      <!-- PAYWALL -->
+      <div class="glass paywall-card hidden" id="paywall">
+        <div class="paywall-icon">🔒</div>
+        <h2 class="paywall-title">Hai usato le tue 3 prove gratuite</h2>
+        <p class="paywall-body">Smetti di pagare agenzie costose. Ottieni copy professionali illimitati a meno di un caffè al giorno.</p>
+        <div class="paywall-price">☕ Meno di 1€ al giorno · Accesso illimitato</div>
+        <a class="btn-upgrade" href="https://buy.stripe.com/aFa7sN0nE4Y0ggSbNggYU05" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Sblocca Accesso Illimitato →
+        </a>
+        <p class="paywall-note">Pagamento sicuro via Stripe · Cancella quando vuoi</p>
+      </div>
 
-    <script>
-        async function generateAds() {
-            const product = document.getElementById('productInput').value;
-            const btn = document.getElementById('btn');
-            const loading = document.getElementById('loading');
-            const results = document.getElementById('results');
-            const errorDiv = document.getElementById('error');
+      <!-- ARCHIVE -->
+      <section class="archive-section hidden" id="archive-section">
+        <div class="section-head">
+          <h2 class="section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+            I tuoi testi recenti
+          </h2>
+          <button class="btn-clear-archive" id="btn-clear-archive">Cancella tutto</button>
+        </div>
+        <div class="archive-list" id="archive-list"></div>
+      </section>
 
-            if (!product) return alert("Inserisci un prodotto!");
+    </main>
 
-            btn.disabled = true;
-            loading.classList.remove('hidden');
-            results.innerHTML = '';
-            errorDiv.classList.add('hidden');
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-logo">Ads<span>Genius</span> Italia</div>
+      <p class="footer-note">I contenuti sono generati da intelligenza artificiale (Google Gemini) e forniti a scopo illustrativo. Non costituiscono consulenza professionale. Acquisti non rimborsabili una volta erogato il servizio.</p>
+      <div class="footer-links">
+        <a href="#" onclick="showLegal('termini');return false">Termini di Servizio</a>
+        <a href="#" onclick="showLegal('privacy');return false">Privacy Policy</a>
+        <a href="mailto:info@adsgenius.it">Contatti</a>
+      </div>
+      <p>© 2025 AdsGenius Italia · Tutti i diritti riservati</p>
+    </footer>
+  </div>
 
-            try {
-                // INDIRIZZO CORRETTO PER NETLIFY
-                const response = await fetch('/.netlify/functions/generate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ product })
-                });
+  <!-- TOAST -->
+  <div class="toast" id="toast">✓ Testo copiato!</div>
 
-                const data = await response.json();
+  <script>
+  /* ═══════════════════════════════════════════
+     CONSTANTS & CONFIG
+  ═══════════════════════════════════════════ */
+  const MAX_FREE = 3;
+  const MAX_ARCHIVE = 5;
+  const STRIPE_URL = 'https://buy.stripe.com/aFa7sN0nE4Y0ggSbNggYU05';
+  const LS_CREDITS = 'ag_credits_v1';
+  const LS_ARCHIVE = 'ag_archive_v1';
 
-                if (!response.ok) throw new Error(data.error || 'Errore del server');
+  const AIDA_META = [
+    { key: 'attenzione', label: 'A — Attenzione', desc: 'Il gancio che ferma lo scroll',  emoji: '⚡' },
+    { key: 'interesse',  label: 'I — Interesse',  desc: 'Costruisce curiosità e rilevanza', emoji: '🧠' },
+    { key: 'desiderio',  label: 'D — Desiderio',  desc: 'Accende il bisogno emotivo',       emoji: '🔥' },
+    { key: 'azione',     label: 'A — Azione',     desc: 'La call-to-action irresistibile',  emoji: '🎯' },
+  ];
 
-                results.innerHTML = `<div class="bg-slate-800 p-6 rounded-xl border border-blue-500/30 shadow-lg">
-                    <pre class="whitespace-pre-wrap font-sans text-slate-200">${data.text}</pre>
-                </div>`;
-            } catch (err) {
-                errorDiv.innerText = "Errore: " + err.message;
-                errorDiv.classList.remove('hidden');
-            } finally {
-                btn.disabled = false;
-                loading.classList.add('hidden');
-            }
-        }
-    </script>
+  /* ═══════════════════════════════════════════
+     PARTICLES INIT
+  ═══════════════════════════════════════════ */
+  (function initParticles(){
+    const c = document.getElementById('particles');
+    for(let i=0;i<16;i++){
+      const p = document.createElement('span');
+      p.className='particle';
+      p.style.cssText=`left:${i*6.4+1}%;animation-duration:${8+i*1.1}s;animation-delay:${i*0.55}s`;
+      c.appendChild(p);
+    }
+  })();
+
+  /* ═══════════════════════════════════════════
+     CREDITS SYSTEM
+  ═══════════════════════════════════════════ */
+  function getCredits(){ return parseInt(localStorage.getItem(LS_CREDITS) ?? MAX_FREE, 10); }
+  function setCredits(n){ localStorage.setItem(LS_CREDITS, n); }
+  function useCredit(){
+    const c = getCredits();
+    if(c <= 0) return false;
+    setCredits(c - 1);
+    return true;
+  }
+
+  function refreshCreditsPill(){
+    const pill   = document.getElementById('credits-pill');
+    const label  = document.getElementById('credits-text');
+    const n      = getCredits();
+    pill.className = 'credits-pill';
+    if(n === 0){
+      pill.classList.add('empty');
+      label.textContent = '0 crediti rimasti';
+    } else if(n === 1){
+      pill.classList.add('warn');
+      label.textContent = '1 prova rimasta';
+    } else {
+      label.textContent = `${n} prove gratuite`;
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     ARCHIVE SYSTEM
+  ═══════════════════════════════════════════ */
+  function getArchive(){ try{ return JSON.parse(localStorage.getItem(LS_ARCHIVE) || '[]'); }catch{ return []; } }
+  function saveToArchive(product, aida){
+    const archive = getArchive();
+    archive.unshift({ product, aida, ts: Date.now() });
+    if(archive.length > MAX_ARCHIVE) archive.pop();
+    localStorage.setItem(LS_ARCHIVE, JSON.stringify(archive));
+  }
+  function clearArchive(){ localStorage.removeItem(LS_ARCHIVE); }
+
+  function formatDate(ts){
+    const d = new Date(ts);
+    return d.toLocaleDateString('it-IT',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  }
+
+  function renderArchive(){
+    const items = getArchive();
+    const section = document.getElementById('archive-section');
+    const list    = document.getElementById('archive-list');
+    if(!items.length){ section.classList.add('hidden'); return; }
+    section.classList.remove('hidden');
+    list.innerHTML = '';
+    items.forEach((entry, idx) => {
+      const el = document.createElement('div');
+      el.className = 'archive-item';
+      const keysHtml = AIDA_META.map(m => `
+        <div class="archive-mini-card">
+          <div class="archive-mini-label">${m.emoji} ${m.label}</div>
+          <div class="archive-mini-text">${escapeHtml(entry.aida[m.key] || '')}</div>
+          <div class="archive-mini-actions">
+            <button class="btn-copy-mini" onclick="copyText(this,'${escapeAttr(entry.aida[m.key]||'')}')">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copia
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      el.innerHTML = `
+        <div class="archive-item-head" onclick="toggleArchiveItem(this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--blue-400);flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          <div class="archive-product">${escapeHtml(entry.product)}</div>
+          <div class="archive-date">${formatDate(entry.ts)}</div>
+          <div class="archive-expand" id="expand-${idx}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="archive-content" id="content-${idx}">
+          <div class="archive-mini-grid">${keysHtml}</div>
+        </div>
+      `;
+      list.appendChild(el);
+    });
+  }
+
+  function toggleArchiveItem(head){
+    const parent = head.parentElement;
+    const expand = head.querySelector('.archive-expand');
+    const content = parent.querySelector('.archive-content');
+    content.classList.toggle('open');
+    expand.classList.toggle('open');
+  }
+
+  /* ═══════════════════════════════════════════
+     COPY UTIL
+  ═══════════════════════════════════════════ */
+  function copyText(btn, text){
+    navigator.clipboard.writeText(text).then(()=>{
+      const orig = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copiato`;
+      showToast();
+      setTimeout(()=>{ btn.innerHTML=orig; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  let toastTimer;
+  function showToast(){
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> t.classList.remove('show'), 2000);
+  }
+
+  /* ═══════════════════════════════════════════
+     HTML HELPERS
+  ═══════════════════════════════════════════ */
+  function escapeHtml(s){ const d=document.createElement('div');d.textContent=s;return d.innerHTML; }
+  function escapeAttr(s){ return s.replace(/'/g,"&#39;").replace(/"/g,"&quot;"); }
+
+  /* ═══════════════════════════════════════════
+     PARSE AIDA FROM TAGGED TEXT
+  ═══════════════════════════════════════════ */
+  function parseAIDA(raw){
+    const tags=['ATTENZIONE','INTERESSE','DESIDERIO','AZIONE'];
+    const result={};
+    tags.forEach((tag,i)=>{
+      const start = raw.indexOf(`[${tag}]`);
+      if(start === -1){ result[tag.toLowerCase()]=''; return; }
+      const contentStart = start + tag.length + 2;
+      const nextTag = tags.slice(i+1).map(t=>`[${t}]`).map(t=>raw.indexOf(t,contentStart)).filter(x=>x>-1);
+      const end = nextTag.length ? Math.min(...nextTag) : raw.length;
+      result[tag.toLowerCase()] = raw.slice(contentStart, end).trim();
+    });
+    return result;
+  }
+
+  /* ═══════════════════════════════════════════
+     RENDER RESULTS
+  ═══════════════════════════════════════════ */
+  function renderResults(aida){
+    const grid = document.getElementById('results-grid');
+    grid.innerHTML = '';
+    AIDA_META.forEach(m => {
+      const text = aida[m.key] || '';
+      const card = document.createElement('div');
+      card.className = 'glass aida-card';
+      card.innerHTML = `
+        <div class="card-head">
+          <div class="card-emoji">${m.emoji}</div>
+          <div class="card-meta">
+            <div class="card-label">${m.label}</div>
+            <div class="card-desc">${m.desc}</div>
+          </div>
+          <button class="btn-copy" onclick="copyText(this,${JSON.stringify(text)})">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copia
+          </button>
+        </div>
+        <p class="card-body-text">${escapeHtml(text)}</p>
+      `;
+      grid.appendChild(card);
+    });
+    grid.classList.remove('hidden');
+    setTimeout(()=> grid.querySelectorAll('.aida-card').forEach(c=>c.classList.add('visible')), 60);
+    document.getElementById('reset-area').classList.remove('hidden');
+  }
+
+  /* ═══════════════════════════════════════════
+     SHOW / HIDE UI STATE
+  ═══════════════════════════════════════════ */
+  function showSkeleton(){ document.getElementById('skeleton').classList.remove('hidden'); }
+  function hideSkeleton(){ document.getElementById('skeleton').classList.add('hidden'); }
+  function showError(msg){
+    const b = document.getElementById('error-banner');
+    document.getElementById('error-text').textContent = msg;
+    b.classList.remove('hidden');
+  }
+  function hideError(){ document.getElementById('error-banner').classList.add('hidden'); }
+  function showPaywall(){ document.getElementById('paywall').classList.remove('hidden'); }
+
+  function resetUI(){
+    document.getElementById('results-grid').classList.add('hidden');
+    document.getElementById('results-grid').innerHTML='';
+    document.getElementById('reset-area').classList.add('hidden');
+    hideError();
+    hideSkeleton();
+    document.getElementById('paywall').classList.add('hidden');
+  }
+
+  /* ═══════════════════════════════════════════
+     GENERATE HANDLER
+  ═══════════════════════════════════════════ */
+  async function generate(){
+    const product = document.getElementById('product-input').value.trim();
+    if(!product) return;
+
+    hideError();
+
+    // Credits check
+    if(!useCredit()){
+      showPaywall();
+      refreshCreditsPill();
+      return;
+    }
+    refreshCreditsPill();
+
+    document.getElementById('btn-generate').disabled = true;
+    document.getElementById('btn-generate').classList.add('loading');
+    document.getElementById('btn-generate').innerHTML = `<div class="spinner"></div> Genero Magia…`;
+
+    resetUI();
+    showSkeleton();
+
+    try {
+      const res = await fetch('/.netlify/functions/generate', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ product })
+      });
+
+      if(!res.ok){
+        const err = await res.json().catch(()=>({}));
+        throw new Error(err.error || `Errore server ${res.status}`);
+      }
+
+      const data = await res.json();
+      const raw  = data.text || '';
+      const aida = parseAIDA(raw);
+
+      hideSkeleton();
+      renderResults(aida);
+      saveToArchive(product, aida);
+      renderArchive();
+
+    } catch(err){
+      hideSkeleton();
+      showError(err.message || 'Errore di connessione. Riprova tra poco.');
+      // Restituzione del credito in caso di errore di rete
+      setCredits(getCredits() + 1);
+      refreshCreditsPill();
+    } finally {
+      const btn = document.getElementById('btn-generate');
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Genera Magia`;
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     LEGAL MODAL (inline)
+  ═══════════════════════════════════════════ */
+  function showLegal(type){
+    const content = type==='termini' ? `
+      <h2 style="font-family:var(--ff-display);font-size:1.3rem;font-weight:700;margin-bottom:1rem">Termini di Servizio</h2>
+      <p><strong>1. Natura del Servizio</strong><br>AdsGenius Italia è uno strumento di assistenza alla creazione di testi pubblicitari tramite intelligenza artificiale generativa (Google Gemini). I contenuti prodotti sono suggerimenti automatici e non costituiscono consulenza professionale.</p>
+      <br><p><strong>2. Contenuti Generati da IA</strong><br>I testi prodotti sono generati automaticamente. AdsGenius Italia non garantisce l'accuratezza, originalità o idoneità commerciale di tali contenuti. L'utente è l'unico responsabile dell'uso che ne fa.</p>
+      <br><p><strong>3. Nessun Rimborso</strong><br>I crediti o abbonamenti acquistati sono non rimborsabili, in quanto il servizio viene erogato immediatamente all'atto della generazione del contenuto.</p>
+      <br><p><strong>4. Limitazione di Responsabilità</strong><br>AdsGenius Italia non sarà responsabile per perdite dirette o indirette derivanti dall'utilizzo dei contenuti generati.</p>
+    ` : `
+      <h2 style="font-family:var(--ff-display);font-size:1.3rem;font-weight:700;margin-bottom:1rem">Privacy Policy</h2>
+      <p><strong>Titolare del trattamento:</strong> AdsGenius Italia — privacy@adsgenius.it</p>
+      <br><p><strong>Dati raccolti:</strong> Raccogliamo esclusivamente i testi inseriti dall'utente nel campo di input ai fini dell'elaborazione della richiesta via API. Non raccogliamo dati personali identificativi senza consenso esplicito.</p>
+      <br><p><strong>Conservazione:</strong> I testi inviati non vengono conservati sui nostri server oltre il tempo necessario all'elaborazione della singola richiesta. I dati in localStorage restano sul tuo dispositivo e possono essere cancellati in qualsiasi momento.</p>
+      <br><p><strong>Base giuridica:</strong> Art. 6.1.b GDPR — esecuzione di un contratto.</p>
+      <br><p><strong>I tuoi diritti:</strong> Hai diritto di accesso, rettifica, cancellazione, portabilità e opposizione. Contattaci a privacy@adsgenius.it</p>
+    `;
+
+    const overlay = document.createElement('div');
+    overlay.style.cssText=`position:fixed;inset:0;background:rgba(5,8,16,.85);backdrop-filter:blur(8px);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.25rem;animation:fade-up .2s ease`;
+    overlay.innerHTML=`
+      <div style="background:var(--glass-bg);backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--r-xl);max-width:560px;width:100%;max-height:80dvh;display:flex;flex-direction:column;">
+        <div style="padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:flex-end">
+          <button onclick="this.closest('div[style]').remove()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:var(--white-70);padding:.3rem .65rem;font-size:.9rem">✕</button>
+        </div>
+        <div style="overflow-y:auto;padding:1.5rem;font-size:.88rem;color:var(--white-70);line-height:1.65">${content}</div>
+      </div>
+    `;
+    overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+  }
+
+  /* ═══════════════════════════════════════════
+     EVENT LISTENERS
+  ═══════════════════════════════════════════ */
+  document.getElementById('btn-generate').addEventListener('click', generate);
+
+  document.getElementById('product-input').addEventListener('input', function(){
+    document.getElementById('char-count').textContent = this.value.length;
+  });
+
+  document.getElementById('product-input').addEventListener('keydown', function(e){
+    if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); generate(); }
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', ()=>{
+    resetUI();
+    document.getElementById('product-input').value='';
+    document.getElementById('char-count').textContent='0';
+  });
+
+  document.getElementById('btn-clear-archive').addEventListener('click', ()=>{
+    if(confirm('Cancellare tutti i testi salvati?')){
+      clearArchive(); renderArchive();
+    }
+  });
+
+  /* ═══════════════════════════════════════════
+     INIT
+  ═══════════════════════════════════════════ */
+  refreshCreditsPill();
+  renderArchive();
+  // Se crediti esauriti, mostra paywall direttamente
+  if(getCredits() <= 0) showPaywall();
+  </script>
 </body>
 </html>
