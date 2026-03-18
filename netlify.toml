@@ -11,9 +11,6 @@
     Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self' 'unsafe-inline' https://*; script-src 'self' 'unsafe-inline' https://*; style-src 'self' 'unsafe-inline' https://*; font-src https://*; connect-src 'self' /.netlify/functions/ https://*;"
 
-[functions]
-  node_bundler      = "esbuild"
-
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
